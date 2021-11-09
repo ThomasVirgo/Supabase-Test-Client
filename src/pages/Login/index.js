@@ -41,6 +41,7 @@ const Login = () => {
                 <input type="submit" value='Login' />
             </form>
             <p>Don't have an account? <Link to='/register'>Register Here</Link></p>
+            <p>Forgotten password? <Link to='/reset_password'>Click Here</Link></p>
             {inputError && <p>{inputError}</p>}
         </div>
     )

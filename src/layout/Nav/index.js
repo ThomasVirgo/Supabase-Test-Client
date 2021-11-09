@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { SupaBaseContext } from '../../context/supabase_client';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 
 const Nav = () => {
@@ -17,6 +17,7 @@ const Nav = () => {
             { user &&
             <>
                 <p>Welcome, {user.user_metadata.username}</p>
+                <Link to='/account'>Account</Link>
                 <button onClick = {logout}>Logout</button>
             </>
             }
