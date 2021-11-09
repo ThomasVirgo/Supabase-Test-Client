@@ -13,8 +13,9 @@ const Dashboard = () => {
         let location = window.location.href;
         let isReset = location.includes('#access_token')
         if (isReset){
-            var url = new URL(location);
-            var access_token = url.searchParams.get("access_token");
+            let hash = location.split('#')[1]
+            let token_list = hash.split('&')[0]
+            let access_token = token_list.split('=')[1]
             console.log(access_token);
             navigate(`/new_password/${access_token}`)
         }
