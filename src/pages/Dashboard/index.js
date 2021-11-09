@@ -11,12 +11,16 @@ const Dashboard = () => {
 
     useEffect(()=>{
         let location = window.location.href;
-        if (!user && !location.includes('#access_token')){
-            navigate('/login')
-        } else {
-            let access_token = location.search.split('access_token=')[1]
-            navigate(`/reset_password/${access_token}`)
+        let isReset = location.includes('#access_token')
+        if (isReset){
+            var url = new URL(location);
+            var access_token = url.searchParams.get("access_token");
+            console.log(access_token);
+            navigate(`/new_password/${access_token}`)
         }
+        if (!user && !isReset){
+            navigate('/login')
+        } 
     }, [navigate, user, supabase])
 
     return (
