@@ -1,10 +1,11 @@
 import React, { useState, useContext } from 'react'
 import { SupaBaseContext } from '../../context/supabase_client';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const Login = () => {
     const supabase = useContext(SupaBaseContext)
     const navigate = useNavigate()
+    const [inputError, setInputError] = useState()
     const [input, setInput] = useState({
         "email": "",
         "password": ""
@@ -23,9 +24,12 @@ const Login = () => {
             email: input.email,
             password: input.password,
         })
-
         console.log(user, session, error);
-        navigate('/')
+        if (!error){
+            navigate('/')
+        } else {
+            setInputError(error.message)
+        }
     }
 
 
@@ -36,6 +40,8 @@ const Login = () => {
                 <input type="password" name='password' placeholder='Password' value={input['password']} onChange={handleChange} required/>
                 <input type="submit" value='Login' />
             </form>
+            <p>Don't have an account? <Link to='/register'>Register Here</Link></p>
+            {inputError && <p>{inputError}</p>}
         </div>
     )
 }

@@ -16,7 +16,7 @@ const Nav = () => {
         <div>
             { user &&
             <>
-                <p>{user.email}</p>
+                <p>Welcome, {user.user_metadata.username}</p>
                 <button onClick = {logout}>Logout</button>
             </>
             }

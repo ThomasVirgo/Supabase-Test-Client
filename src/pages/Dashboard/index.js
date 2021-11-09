@@ -18,7 +18,6 @@ const Dashboard = () => {
     return (
         <>
         <Nav></Nav>
-        <div>Dashboard</div>
         </>
     )
 }
