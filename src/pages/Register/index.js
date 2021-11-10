@@ -43,16 +43,18 @@ const Register = () => {
 
 
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
-                <StringInput type="email" name='email' placeholder='Email' value={input['email']} onChange={handleChange}/>
-                <StringInput type="text" name='username' placeholder='Username' value={input['username']} onChange={handleChange}/>
-                <StringInput type="password" name='password' placeholder='Password' value={input['password']} onChange={handleChange}/>
-                <StringInput type="password" name='password2' placeholder='Confirm Password' value={input['password2']} onChange={handleChange}/>
-                <SubmitButton value='Register' />
-            </form>
-            <p>Already have an account? <Link to='/login'>Login Here</Link></p>
-            {inputError && <p>{inputError}</p>}
+        <div className='center_container'>
+            <div className='shadow_container_center'>
+                <form className='form_container' onSubmit={handleSubmit}>
+                    <StringInput type="email" name='email' placeholder='Email' value={input['email']} onChange={handleChange}/>
+                    <StringInput type="text" name='username' placeholder='Username' value={input['username']} onChange={handleChange}/>
+                    <StringInput type="password" name='password' placeholder='Password' value={input['password']} onChange={handleChange}/>
+                    <StringInput type="password" name='password2' placeholder='Confirm Password' value={input['password2']} onChange={handleChange}/>
+                    <SubmitButton value='Register' />
+                </form>
+                <p>Already have an account? <Link to='/login'>Login Here</Link></p>
+                {inputError && <p>{inputError}</p>}
+            </div>
         </div>
     )
 }

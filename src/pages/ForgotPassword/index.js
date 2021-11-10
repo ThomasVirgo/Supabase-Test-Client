@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { SupaBaseContext } from '../../context/supabase_client'
-import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { StringInput, SubmitButton } from '../../components'
 
 const ForgotPassword = () => {
@@ -8,7 +8,6 @@ const ForgotPassword = () => {
     const [email, setEmail] = useState('')
     const [inputError, setInputError] = useState('')
     const [message, setMessage] = useState('')
-    const navigate = useNavigate();
 
     function handleChange(event){
         setEmail(event.target.value)
@@ -26,17 +25,19 @@ const ForgotPassword = () => {
     }
 
     return (
-        <>
-        <button onClick={() => navigate(-1)}>go back</button>
-        { !message &&
-        <form onSubmit={handleSubmit}>
-            <StringInput type='email' placeholder='email' value={email} onChange={handleChange}/>
-            <SubmitButton value='Send Reset Email'/>
-        </form>
-        }
-        {inputError && <p>{inputError}</p>}
-        {message && <p>{message}</p>}
-        </>
+        <div className='center_container'>
+            <div className='shadow_container_center'>
+                <Link to='/login'>{'<--'} go back</Link>
+                { !message &&
+                <form className='form_container' onSubmit={handleSubmit}>
+                    <StringInput type='email' placeholder='email' value={email} onChange={handleChange}/>
+                    <SubmitButton value='Send Reset Email'/>
+                </form>
+                }
+                {inputError && <p>{inputError}</p>}
+                {message && <p>{message}</p>}
+            </div>
+        </div>
     )
 }
 

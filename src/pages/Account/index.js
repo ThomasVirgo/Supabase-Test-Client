@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { SupaBaseContext } from '../../context/supabase_client'
 import { StringInput, SubmitButton } from '../../components'
+import './style.css'
 
 const Account = () => {
     const supabase = useContext(SupaBaseContext)
@@ -38,17 +39,19 @@ const Account = () => {
 
     return (
         <div>
-            <h1>Update Username or Password</h1>
-            <form onSubmit = {changeUsername}>
-                <StringInput type='text' name='username' onChange={handleChange} value={input.username} placeholder='new username' />
-                <SubmitButton value='Change Username'/>
-            </form>
-            <form onSubmit = {changePassword}>
-                <StringInput type='password' name='password' onChange={handleChange} value={input.password} placeholder='new password' />
-                <StringInput type='password' name='password2' onChange={handleChange} value={input.password2}  placeholder='confirm new password' />
-                <SubmitButton value='Change Password'/>
-            </form>
-            {passwordError && <p>{passwordError}</p>}
+            <h1 className='account_header'>Update Username or Password</h1>
+            <div className='account_forms_container'>
+                <form className='account_form' onSubmit = {changeUsername}>
+                    <StringInput type='text' name='username' onChange={handleChange} value={input.username} placeholder='new username' />
+                    <SubmitButton value='Change Username'/>
+                </form>
+                <form className='account_form' onSubmit = {changePassword}>
+                    <StringInput type='password' name='password' onChange={handleChange} value={input.password} placeholder='new password' />
+                    <StringInput type='password' name='password2' onChange={handleChange} value={input.password2}  placeholder='confirm new password' />
+                    <SubmitButton value='Change Password'/>
+                </form>
+                {passwordError && <p>{passwordError}</p>}
+            </div>
         </div>
     )
 }

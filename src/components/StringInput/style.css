@@ -11,3 +11,7 @@
     outline: none;
     border-bottom: 2px solid var(--main-color-light);
 }
+
+.text_input_class:hover{
+    border-bottom: 2px solid var(--main-color-light);
+}

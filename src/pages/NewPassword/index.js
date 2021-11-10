@@ -38,15 +38,17 @@ const NewPassword = () => {
     }
 
     return (
-        <>
-        <button><Link to='/'>Home</Link></button>
-        <form onSubmit={handleSubmit}>
-            <StringInput type='password' name='password' placeholder='New Password' value={passwords.password} onChange={handleChange}/>
-            <StringInput type='password' name='password2' placeholder='Confirm Password' value={passwords.password2} onChange={handleChange}/>
-            <SubmitButton value='Change Password'/>
-        </form>
-        {passwordError && <p>{passwordError}</p>}
-        </>
+        <div className='center_container'>
+            <div className='shadow_container_center'>
+                <Link to='/'>Home</Link>
+                <form className='form_container' onSubmit={handleSubmit}>
+                    <StringInput type='password' name='password' placeholder='New Password' value={passwords.password} onChange={handleChange}/>
+                    <StringInput type='password' name='password2' placeholder='Confirm Password' value={passwords.password2} onChange={handleChange}/>
+                    <SubmitButton value='Change Password'/>
+                </form>
+                {passwordError && <p>{passwordError}</p>}
+            </div>
+        </div>
     )
 }
 

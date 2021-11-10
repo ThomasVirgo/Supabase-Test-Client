@@ -1,0 +1,22 @@
+.account_forms_container {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    width: 70vw;
+    gap: 30px;
+    border-radius: 20px;
+    padding: 20px;
+    background-color: var(--background-color-dark);
+    box-shadow: var(--main-color-light) 0px 5px 15px;
+}
+
+.account_header{
+    text-align: center;
+    color: var(--text-color);
+}
+
+.account_form{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
