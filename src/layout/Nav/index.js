@@ -20,8 +20,9 @@ const Nav = () => {
             <>
                 <p>Welcome, {user.user_metadata.username}</p>
                 <div className='nav_links'>
-                    <NavLink to='/account'>Account</NavLink>
                     <NavLink to='/'>Home</NavLink>
+                    <NavLink to='/account'>Account</NavLink>
+                    <NavLink to='/chat'>Chat</NavLink>
                     <button onClick = {logout}>Logout</button>
                 </div>
             </>
