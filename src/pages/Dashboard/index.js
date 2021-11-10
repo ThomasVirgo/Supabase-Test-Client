@@ -7,7 +7,6 @@ const Dashboard = () => {
     const supabase = useContext(SupaBaseContext)
     const navigate = useNavigate()
     const user = supabase.auth.user()
-    console.log(user);
 
     useEffect(()=>{
         let location = window.location.href;
@@ -16,7 +15,6 @@ const Dashboard = () => {
             let hash = location.split('#')[1]
             let token_list = hash.split('&')[0]
             let access_token = token_list.split('=')[1]
-            console.log(access_token);
             navigate(`/new_password/${access_token}`)
         }
         if (!user && !isReset){
