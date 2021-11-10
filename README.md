@@ -5,3 +5,4 @@
 - add styling
 - add back button to reset password
 - redirect user on successfully resetting password
+- fix bug on sign up link, redirects to change password!!
