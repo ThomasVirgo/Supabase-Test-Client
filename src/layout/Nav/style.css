@@ -1,0 +1,14 @@
+.nav_container{
+    background-color: var(--background-color-dark);
+    padding: 10px;
+}
+
+.nav_links{
+    display: flex;
+    justify-content: space-around;
+}
+
+.active{
+    color: var(--main-color-light);
+    text-decoration: underline;
+}
