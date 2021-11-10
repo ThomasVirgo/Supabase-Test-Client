@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { SupaBaseContext } from '../../context/supabase_client'
+import { StringInput, SubmitButton } from '../../components'
 
 const Account = () => {
     const supabase = useContext(SupaBaseContext)
@@ -39,13 +40,13 @@ const Account = () => {
         <div>
             <h1>Update Username or Password</h1>
             <form onSubmit = {changeUsername}>
-                <input type='text' name='username' onChange={handleChange} value={input.username} placeholder='new username' required></input>
-                <input type='submit' value='Change Username'></input>
+                <StringInput type='text' name='username' onChange={handleChange} value={input.username} placeholder='new username' />
+                <SubmitButton value='Change Username'/>
             </form>
             <form onSubmit = {changePassword}>
-                <input type='password' name='password' onChange={handleChange} value={input.password} placeholder='new password' required></input>
-                <input type='password' name='password2' onChange={handleChange} value={input.password2}  placeholder='confirm new password' required></input>
-                <input type='submit' value='Change Password'></input>
+                <StringInput type='password' name='password' onChange={handleChange} value={input.password} placeholder='new password' />
+                <StringInput type='password' name='password2' onChange={handleChange} value={input.password2}  placeholder='confirm new password' />
+                <SubmitButton value='Change Password'/>
             </form>
             {passwordError && <p>{passwordError}</p>}
         </div>

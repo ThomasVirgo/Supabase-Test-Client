@@ -35,15 +35,17 @@ const Login = () => {
 
 
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
-                <StringInput type="email" name='email' placeholder='Email' value={input['email']} onChange={handleChange}/>
-                <StringInput type="password" name='password' placeholder='Password' value={input['password']} onChange={handleChange}/>
-                <SubmitButton value='Login' />
-            </form>
-            <p>Don't have an account? <Link to='/register'>Register Here</Link></p>
-            <p>Forgotten password? <Link to='/reset_password'>Click Here</Link></p>
-            {inputError && <p>{inputError}</p>}
+        <div className='center_container'>
+            <div className='shadow_container_center'>
+                <form className='form_container' onSubmit={handleSubmit}>
+                    <StringInput type="email" name='email' placeholder='Email' value={input['email']} onChange={handleChange}/>
+                    <StringInput type="password" name='password' placeholder='Password' value={input['password']} onChange={handleChange}/>
+                    <SubmitButton value='Login' />
+                </form>
+                <p>Don't have an account? <Link to='/register'>Register Here</Link></p>
+                <p>Forgotten password? <Link to='/reset_password'>Click Here</Link></p>
+                {inputError && <p>{inputError}</p>}
+            </div>
         </div>
     )
 }

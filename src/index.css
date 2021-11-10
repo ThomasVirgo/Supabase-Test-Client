@@ -16,6 +16,33 @@
     font-family: var(--font);
 }
 
+.center_container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.shadow_container_center{
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    margin-top: auto;
+    width: 50vw;
+    height: 50vh;
+    border-radius: 20px;
+    padding: 20px;
+    background-color: var(--background-color);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.form_container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 50%;
+}
+
 p {
     color: var(--text-color);
 }
