@@ -9,8 +9,9 @@ const Nav = () => {
     const navigate = useNavigate()
     async function logout(){
         const { error } = await supabase.auth.signOut()
-        console.log(error);
-        navigate('/')
+        if (!error){
+            navigate('/')
+        }
     }
     return (
         <div>

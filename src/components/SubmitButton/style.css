@@ -1,0 +1,11 @@
+.submit_button{
+    border: none;
+    background-color: var(--main-color);
+    color: var(--text-color);
+    font-family: var(--font);
+}
+
+.submit_button:hover{
+    background-color: var(--main-color-light);
+    cursor: pointer;
+}

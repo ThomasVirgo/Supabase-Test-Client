@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { SupaBaseContext } from "../../context/supabase_client";
 import { Link } from "react-router-dom";
+import { StringInput, SubmitButton } from "../../components";
 
 const Register = () => {
     const supabase = useContext(SupaBaseContext)
@@ -44,11 +45,11 @@ const Register = () => {
     return (
         <div>
             <form onSubmit={handleSubmit}>
-                <input type="email" name='email' placeholder='Email' value={input['email']} onChange={handleChange} required/>
-                <input type="text" name='username' placeholder='Username' value={input['username']} onChange={handleChange} required/>
-                <input type="password" name='password' placeholder='Password' value={input['password']} onChange={handleChange} required/>
-                <input type="password" name='password2' placeholder='Confirm Password' value={input['password2']} onChange={handleChange} required/>
-                <input type="submit" value='Register' />
+                <StringInput type="email" name='email' placeholder='Email' value={input['email']} onChange={handleChange}/>
+                <StringInput type="text" name='username' placeholder='Username' value={input['username']} onChange={handleChange}/>
+                <StringInput type="password" name='password' placeholder='Password' value={input['password']} onChange={handleChange}/>
+                <StringInput type="password" name='password2' placeholder='Confirm Password' value={input['password2']} onChange={handleChange}/>
+                <SubmitButton value='Register' />
             </form>
             <p>Already have an account? <Link to='/login'>Login Here</Link></p>
             {inputError && <p>{inputError}</p>}

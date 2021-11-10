@@ -1,0 +1,13 @@
+.text_input_class{
+    border: none;
+    border-bottom: 2px solid var(--main-color);
+    text-decoration: none;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    font-family: var(--font);
+}
+
+.text_input_class:focus{
+    outline: none;
+    border-bottom: 2px solid var(--main-color-light);
+}

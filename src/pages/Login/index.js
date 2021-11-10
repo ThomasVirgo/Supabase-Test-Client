@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { SupaBaseContext } from '../../context/supabase_client';
 import { useNavigate, Link } from 'react-router-dom';
+import { StringInput, SubmitButton } from '../../components';
 
 const Login = () => {
     const supabase = useContext(SupaBaseContext)
@@ -36,9 +37,9 @@ const Login = () => {
     return (
         <div>
             <form onSubmit={handleSubmit}>
-                <input type="email" name='email' placeholder='Email' value={input['email']} onChange={handleChange} required/>
-                <input type="password" name='password' placeholder='Password' value={input['password']} onChange={handleChange} required/>
-                <input type="submit" value='Login' />
+                <StringInput type="email" name='email' placeholder='Email' value={input['email']} onChange={handleChange}/>
+                <StringInput type="password" name='password' placeholder='Password' value={input['password']} onChange={handleChange}/>
+                <SubmitButton value='Login' />
             </form>
             <p>Don't have an account? <Link to='/register'>Register Here</Link></p>
             <p>Forgotten password? <Link to='/reset_password'>Click Here</Link></p>
