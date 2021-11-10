@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { SupaBaseContext } from '../../context/supabase_client'
 import { useNavigate } from 'react-router-dom'
+import { StringInput, SubmitButton } from '../../components'
 
 const ForgotPassword = () => {
     const supabase = useContext(SupaBaseContext)
@@ -29,8 +30,8 @@ const ForgotPassword = () => {
         <button onClick={() => navigate(-1)}>go back</button>
         { !message &&
         <form onSubmit={handleSubmit}>
-            <input type='email' placeholder='email' value={email} onChange={handleChange} required></input>
-            <input type='submit' value='Send Reset Email'></input>
+            <StringInput type='email' placeholder='email' value={email} onChange={handleChange}/>
+            <SubmitButton value='Send Reset Email'/>
         </form>
         }
         {inputError && <p>{inputError}</p>}

@@ -15,3 +15,28 @@
     margin: 0;
     font-family: var(--font);
 }
+
+p {
+    color: var(--text-color);
+}
+
+a {
+    text-decoration: none;
+    color: var(--main-color);
+}
+
+a:hover{
+    color: var(--main-color-light);
+}
+
+button{
+    border: none;
+    color: var(--text-color);
+    background-color: var(--main-color);
+    font-family: var(--font);
+}
+
+button:hover{
+    background-color: var(--main-color-light);
+    cursor: pointer;
+}
