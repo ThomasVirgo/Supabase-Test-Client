@@ -1,6 +1,7 @@
-import React, { useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { SupaBaseContext } from '../../context/supabase_client'
 import { NavLink, Routes, Route } from 'react-router-dom'
+import { MessagesContainer, RequestsContainer } from '../../layout'
 import './style.css'
 
 const Chat = () => {
@@ -13,21 +14,26 @@ const Chat = () => {
         }
         fecthData()
     }, [supabase])
+    const [type, setType] = useState('messages')
+
+    function toggleType(input){
+        setType(input)
+    }
+
     return (
         <div className='chat_main_container'>
             <div className='chat_left_container'>
 
                 <div className='chat_buttons_container'>
-                    <NavLink to='messages'>Messages</NavLink>
-                    <NavLink to='requests'>Requests</NavLink>
+                    <NavLink to='messages' onClick={() => toggleType('messages')}>Messages</NavLink>
+                    <NavLink to='requests' onClick={() => toggleType('requests')}>Requests</NavLink>
                 </div>
 
                 <input type='text' placeholder='search...'></input>
 
                 <div className='chat_list_container'>
-                    <div className='chat_friend_card'>Name</div>
-                    <div className='chat_friend_card'>Name</div>
-                    <div className='chat_friend_card'>Name</div>
+                    <NavLink to={`${type}/tom`}>Tom</NavLink>
+                    <NavLink to={`${type}/gaz`}>gaz</NavLink>
                 </div>
 
                 <button>Add Friend</button>
@@ -35,8 +41,8 @@ const Chat = () => {
             </div> 
             <div className='chat_right_container'>
                 <Routes>
-                    <Route path="messages" element={<h1>Messages</h1>} />
-                    <Route path="requests" element={<h1>Requests</h1>} />
+                    <Route path="messages/*" element={<MessagesContainer/>} />
+                    <Route path="requests/*" element={<RequestsContainer/>} />
                 </Routes>
             </div> 
         </div>
