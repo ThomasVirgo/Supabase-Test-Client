@@ -7,6 +7,7 @@ const Register = () => {
     const supabase = useContext(SupaBaseContext)
     const [inputError, setInputError] = useState('')
     const [message, setMessage] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
     const [input, setInput] = useState({
         "email": "",
         "password": "",
@@ -22,6 +23,7 @@ const Register = () => {
 
     async function handleSubmit(event){
         event.preventDefault()
+        setIsLoading(true)
         if (input.password === input.password2){
             const { user, session, error } = await supabase.auth.signUp(
                 {
@@ -59,7 +61,7 @@ const Register = () => {
                     <StringInput type="text" name='username' placeholder='Username' value={input['username']} onChange={handleChange}/>
                     <StringInput type="password" name='password' placeholder='Password' value={input['password']} onChange={handleChange}/>
                     <StringInput type="password" name='password2' placeholder='Confirm Password' value={input['password2']} onChange={handleChange}/>
-                    <SubmitButton value='Register' />
+                    {!isLoading ? <SubmitButton value='Register' /> : <button>loading...</button>}
                 </form>}
                 <p>Already have an account? <Link to='/login'>Login Here</Link></p>
                 {inputError && <p>{inputError}</p>}

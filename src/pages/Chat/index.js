@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { SupaBaseContext } from '../../context/supabase_client'
 import { NavLink, Routes, Route } from 'react-router-dom'
-import { MessagesContainer, RequestsContainer } from '../../layout'
+import { MessagesContainer, RequestsContainer, AddFriendModal } from '../../layout'
+import { StringInput } from '../../components'
 import './style.css'
 
 const Chat = () => {
     const supabase = useContext(SupaBaseContext)
+    const [isModalActive, setIsModalActive] = useState(false)
     useEffect(()=>{
         async function fecthData(){
             const { data, error } = await supabase.from('profiles').select()
@@ -20,6 +22,11 @@ const Chat = () => {
         setType(input)
     }
 
+    function toggleModal(){
+        let newActive = !isModalActive
+        setIsModalActive(newActive)
+    }
+
     return (
         <div className='chat_main_container'>
             <div className='chat_left_container'>
@@ -29,15 +36,17 @@ const Chat = () => {
                     <NavLink to='requests' onClick={() => toggleType('requests')}>Requests</NavLink>
                 </div>
 
-                <input type='text' placeholder='search...'></input>
+                <button onClick = {toggleModal}>Add Friend</button>
+
+                <StringInput type='text' placeholder='search...'/>
 
                 <div className='chat_list_container'>
                     <NavLink to={`${type}/tom`}>Tom</NavLink>
                     <NavLink to={`${type}/gaz`}>gaz</NavLink>
                 </div>
 
-                <button>Add Friend</button>
-            
+                {isModalActive && <AddFriendModal />}
+
             </div> 
             <div className='chat_right_container'>
                 <Routes>
