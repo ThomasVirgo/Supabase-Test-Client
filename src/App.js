@@ -15,7 +15,7 @@ function App() {
             <Route path="/new_password/:token" element={<NewPassword />} />
             <Route path="/" element={<Dashboard />}>
               <Route path="account" element={<Account />} />
-              <Route path="chat" element={<Chat />} />
+              <Route path="chat/*" element={<Chat />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
