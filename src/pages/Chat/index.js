@@ -8,14 +8,19 @@ import './style.css'
 const Chat = () => {
     const supabase = useContext(SupaBaseContext)
     const [isModalActive, setIsModalActive] = useState(false)
+    const [requests, setRequests] = useState([])
+    const user = supabase.auth.user()
     useEffect(()=>{
-        async function fecthData(){
-            const { data, error } = await supabase.from('profiles').select()
+        async function fetchData(){
+            const { data, error } = await supabase.from('friend requests').select('*').match({to_user_id: user.id})
             console.log('error', error);
             console.log(data);
+            if (data){
+                setRequests(data)
+            }
         }
-        fecthData()
-    }, [supabase])
+        fetchData()
+    }, [supabase, user.id])
     const [type, setType] = useState('messages')
 
     function toggleType(input){
@@ -26,6 +31,8 @@ const Chat = () => {
         let newActive = !isModalActive
         setIsModalActive(newActive)
     }
+
+    const requestLinks = requests.map((request, idx) => <div key={idx}> <NavLink to={`requests/${request.from_user_id}`}>{request.from_user_name}</NavLink> </div>)
 
     return (
         <div className='chat_main_container'>
@@ -41,11 +48,10 @@ const Chat = () => {
                 <StringInput type='text' placeholder='search...'/>
 
                 <div className='chat_list_container'>
-                    <NavLink to={`${type}/tom`}>Tom</NavLink>
-                    <NavLink to={`${type}/gaz`}>gaz</NavLink>
+                    {type === 'requests' ? requestLinks : <a href='#'>Message Links</a>}
                 </div>
 
-                {isModalActive && <AddFriendModal />}
+                {isModalActive && <AddFriendModal toggleModal={toggleModal}/>}
 
             </div> 
             <div className='chat_right_container'>
