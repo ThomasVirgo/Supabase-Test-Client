@@ -18,6 +18,18 @@
 .chat_buttons_container{
     display: grid;
     grid-template-columns: 1fr 1fr;
+    margin-top: 10px;
+}
+
+.chat_buttons_container a{
+    /* border: 2px solid var(--main-color-light); */
+    text-align: center;
+}
+
+.chat_buttons_container .active{
+    color: white;
+    text-decoration: none;
+    background-color: var(--background-color-dark);
 }
 
 .chat_list_container{

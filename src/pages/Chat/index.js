@@ -33,7 +33,7 @@ const Chat = () => {
         setIsModalActive(newActive)
     }
 
-    const requestLinks = requests.map((request, idx) =><div onClick = {() => setActiveLink(request.from_user_id)} className='chat_left_link_card' key={idx}><Link className={activeLink === request.from_user_id ? 'request_link_active' : ''} to={`requests/${request.from_user_name}/${request.from_user_id}`}>{request.from_user_name}</Link></div>)
+    const requestLinks = requests.map((request, idx) =><div onClick = {() => setActiveLink(request.from_user_id)} className='chat_left_link_card' key={idx}><Link className={activeLink === request.from_user_id ? 'request_link_active' : ''} to={`requests/${request.from_user_name}/${request.id}`}>{request.from_user_name}</Link></div>)
 
     return (
         <div className='chat_main_container'>
@@ -45,8 +45,6 @@ const Chat = () => {
                 </div>
 
                 <button onClick = {toggleModal}>Add Friend</button>
-
-                <StringInput type='text' placeholder='search...'/>
 
                 <div className='chat_list_container'>
                     {type === 'requests' ? requestLinks : <a href='#'>Message Links</a>}
