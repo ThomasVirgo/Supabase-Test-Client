@@ -10,7 +10,7 @@ const Dashboard = () => {
 
     useEffect(()=>{
         let location = window.location.href;
-        let isReset = location.includes('#access_token')
+        let isReset = location.includes('type=recovery')
         if (isReset){
             let hash = location.split('#')[1]
             let token_list = hash.split('&')[0]
