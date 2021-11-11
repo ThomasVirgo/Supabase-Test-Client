@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { SupaBaseContext } from '../../context/supabase_client'
-import { NavLink, Routes, Route } from 'react-router-dom'
+import { NavLink, Routes, Route, Link } from 'react-router-dom'
 import { MessagesContainer, RequestsContainer, AddFriendModal } from '../../layout'
 import { StringInput } from '../../components'
 import './style.css'
@@ -9,6 +9,7 @@ const Chat = () => {
     const supabase = useContext(SupaBaseContext)
     const [isModalActive, setIsModalActive] = useState(false)
     const [requests, setRequests] = useState([])
+    const [activeLink, setActiveLink] = useState('')
     const user = supabase.auth.user()
     useEffect(()=>{
         async function fetchData(){
@@ -32,7 +33,7 @@ const Chat = () => {
         setIsModalActive(newActive)
     }
 
-    const requestLinks = requests.map((request, idx) => <div key={idx}> <NavLink to={`requests/${request.from_user_id}`}>{request.from_user_name}</NavLink> </div>)
+    const requestLinks = requests.map((request, idx) =><div onClick = {() => setActiveLink(request.from_user_id)} className='chat_left_link_card' key={idx}><Link className={activeLink === request.from_user_id ? 'request_link_active' : ''} to={`requests/${request.from_user_name}/${request.from_user_id}`}>{request.from_user_name}</Link></div>)
 
     return (
         <div className='chat_main_container'>
