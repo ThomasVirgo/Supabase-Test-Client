@@ -7,13 +7,15 @@ const Requests = () => {
     const params = useParams();
     const [message, setMessage] = useState('')
     const supabase = useContext(SupaBaseContext)
-    const user = supabase.auth.user()
+    // const user = supabase.auth.user()
     useEffect(()=>{
         setMessage('')
     }, [params])
 
     async function respond(response){
         if (response === 'accept'){
+            // update the friend request
+            // update both users to have friends in their meta data
             setMessage('Friend request accepted.')
         }
 

@@ -2,27 +2,37 @@ import React, { useState, useEffect, useContext } from 'react'
 import { SupaBaseContext } from '../../context/supabase_client'
 import { NavLink, Routes, Route, Link } from 'react-router-dom'
 import { MessagesContainer, RequestsContainer, AddFriendModal } from '../../layout'
-import { StringInput } from '../../components'
+import { useSelector, useDispatch } from 'react-redux'
+import { initFriendRequests, initSentRequests } from '../../actions'
 import './style.css'
 
 const Chat = () => {
     const supabase = useContext(SupaBaseContext)
     const [isModalActive, setIsModalActive] = useState(false)
-    const [requests, setRequests] = useState([])
     const [activeLink, setActiveLink] = useState('')
+    const [type, setType] = useState('messages')
     const user = supabase.auth.user()
+    const requests = useSelector(state => state.friend_requests)
+    const dispatch = useDispatch()
+
     useEffect(()=>{
-        async function fetchData(){
-            const { data, error } = await supabase.from('friend requests').select('*').match({to_user_id: user.id})
+        async function fetchData1(){
+            let { data, error } = await supabase.from('friend requests').select('*').match({to_user_id: user.id})
             console.log('error', error);
-            console.log(data);
             if (data){
-                setRequests(data)
+                dispatch(initFriendRequests(data))
             }
         }
-        fetchData()
-    }, [supabase, user.id])
-    const [type, setType] = useState('messages')
+        async function fetchData2(){
+            const { data, error } = await supabase.from('friend requests').select('*').match({from_user_id: user.id})
+            console.log('error', error);
+            if (data){
+                dispatch(initSentRequests(data))
+            }
+        }
+        fetchData1()
+        fetchData2()
+    }, [supabase, user.id, dispatch])
 
     function toggleType(input){
         setType(input)
@@ -47,7 +57,7 @@ const Chat = () => {
                 <button onClick = {toggleModal}>Add Friend</button>
 
                 <div className='chat_list_container'>
-                    {type === 'requests' ? requestLinks : <a href='#'>Message Links</a>}
+                    {type === 'requests' ? requestLinks : <a href='/messagessss'>Message Links</a>}
                 </div>
 
                 {isModalActive && <AddFriendModal toggleModal={toggleModal}/>}
