@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { useParams } from 'react-router-dom';
 import { SupaBaseContext } from '../../context/supabase_client';
+import { useSelector } from 'react-redux';
 import './style.css'
 
 const Requests = () => {
@@ -11,25 +12,26 @@ const Requests = () => {
     useEffect(()=>{
         setMessage('')
     }, [params])
+    let requests = useSelector(state => state.friend_requests)
+    let request = requests.find( element => element.id == params.id)
 
     async function respond(response){
         if (response === 'accept'){
-            // update the friend request
-            // update both users to have friends in their meta data
             setMessage('Friend request accepted.')
+            await supabase.from('friend requests').update({ responded: true, accepted: true }).match({ id: params.id })
+            await supabase.from('friends').insert([
+                { user1_id: request.from_user_id,
+                  user2_id: request.to_user_id, 
+                  user1_name: request.from_user_name,
+                  user2_name: request.to_user_name
+                 }
+              ])
         }
 
         if (response === 'decline'){
             setMessage('Friend request declined.')
+            await supabase.from('friend requests').update({ responded: true, accepted: false }).match({ id: params.id })
         }
-
-        let userResponse = response === 'accept';
-        const { data, error } = await supabase
-        .from('friend requests')
-        .update({ responded: true, accepted: userResponse })
-        .match({ id: params.id })
-        console.log(data);
-        console.log(error?.message);
 
     }
     return (

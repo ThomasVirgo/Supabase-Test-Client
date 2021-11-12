@@ -12,4 +12,13 @@ function initSentRequests(data){
     } 
 }
 
-export {initFriendRequests, initSentRequests}
+
+function initFriends(data){
+    return {
+        type: 'INIT_FRIENDS',
+        payload: data
+    } 
+}
+
+
+export {initFriendRequests, initSentRequests, initFriends}

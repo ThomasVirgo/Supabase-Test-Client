@@ -4,12 +4,9 @@ import { Messages } from '..';
 
 const MessagesContainer = () => {
     return (
-        <div>
-            <h1>Messages</h1>
             <Routes>
-                <Route path=":id" element={<Messages/>} />
+                <Route path=":username/:id" element={<Messages/>} />
             </Routes>
-        </div>
     )
 }
 

@@ -15,6 +15,7 @@ const AddFriendModal = ({toggleModal}) => {
             const { data, error } = await supabase.from('profiles').select()
             console.log('error', error);
             console.log(data);
+            // if already friends or if already sent a request to them then show user this
             setUsers(data)
         }
         fetchData()

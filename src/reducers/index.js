@@ -1,6 +1,7 @@
 const initState = {
     friend_requests: [],
     sent_requests: [],
+    friends: [],
   }
   
   const reducer = (state=initState, action) => {
@@ -11,16 +12,22 @@ const initState = {
               active_users: action.payload
           }
         
-          case 'INIT_FRIEND_REQUESTS':
-              return {
-                  ...state,
-                  friend_requests: action.payload
-              }
-          case 'INIT_SENT_REQUESTS':
-              return {
-                  ...state,
-                  sent_requests: action.payload
-              }
+        case 'INIT_FRIEND_REQUESTS':
+            return {
+                ...state,
+                friend_requests: action.payload
+            }
+        case 'INIT_SENT_REQUESTS':
+            return {
+                ...state,
+                sent_requests: action.payload
+            }
+        case 'INIT_FRIENDS':
+            return {
+                ...state,
+                friends: action.payload
+            }
+        
         default:
             return state;
     }
