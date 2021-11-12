@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { useParams } from 'react-router-dom';
 import { SupaBaseContext } from '../../context/supabase_client';
 import './style.css'
@@ -6,12 +6,26 @@ import './style.css'
 const Messages = () => {
     const params = useParams();
     const supabase = useContext(SupaBaseContext)
+    const user = supabase.auth.user()
     const [input, setInput] = useState('')
 
-    function handleSubmit(event){
+    // useEffect(()=>{
+    //     async function fetchMessages(){
+    //         const { data, error } = await supabase
+    //             .from('messages')
+    //             .select('*')
+    //             .match({from_user: 'Beijing', country_id: 156})
+    //     }
+    // }, [])
+
+    async function handleSubmit(event){
         event.preventDefault()
         console.log(input);
         setInput('')
+        const { error } = await supabase.from('messages').insert([
+            { from_user: user.id, to_user: params.id, content:input }
+        ])
+        console.log(error);
     }
 
     function handleChange (event){
