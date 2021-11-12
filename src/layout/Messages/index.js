@@ -1,22 +1,41 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { useParams } from 'react-router-dom';
 import { SupaBaseContext } from '../../context/supabase_client';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime'
 import './style.css'
+dayjs.extend(relativeTime)
 
 const Messages = () => {
     const params = useParams();
     const supabase = useContext(SupaBaseContext)
     const user = supabase.auth.user()
     const [input, setInput] = useState('')
+    const [messages, setMessages] = useState([])
 
-    // useEffect(()=>{
-    //     async function fetchMessages(){
-    //         const { data, error } = await supabase
-    //             .from('messages')
-    //             .select('*')
-    //             .match({from_user: 'Beijing', country_id: 156})
-    //     }
-    // }, [])
+    useEffect(()=>{
+        async function fetchMessages(){
+            // const my_messages = await supabase
+            //     .from('messages')
+            //     .select('*')
+            //     .match({from_user: user.id, to_user: params.id})
+            // const their_messages = await supabase
+            //     .from('messages')
+            //     .select('*')
+            //     .match({from_user: params.id, to_user: user.id})
+
+            const { data, error } = await supabase
+                .from('messages')
+                .select('*')
+                .or(`and(from_user.eq.${user.id},to_user.eq.${params.id}),and(from_user.eq.${params.id},to_user.eq.${user.id})`)
+            console.log('message collection error:', error?.message);
+            if (data){
+                setMessages(data)
+            }
+            console.log(data);
+        }
+        fetchMessages()
+    }, [user, params, supabase])
 
     async function handleSubmit(event){
         event.preventDefault()
@@ -32,16 +51,25 @@ const Messages = () => {
         setInput(event.target.value)
     }
 
+    const messageCards = messages.map((message, idx) => 
+            <div className = {message.from_user === user.id ? 'message_div_right' : 'message_div_left'} key={idx}>
+                <p className='message_date'>{dayjs(message.created_at).fromNow()}</p>
+                <div>{message.content}</div>
+            </div>
+        )
+
     return (
         <div className='messages_main_container'>
             <h1 className='messages_username_header'>{params.username}</h1>
             <div className='messages_container'>
-                <div className='messages_in_here'></div>
-                <form className='messages_form' onSubmit={handleSubmit}>
-                    <input className='messages_input' type='text' placeholder='message...' value={input} onChange={handleChange} ></input>
-                    <input className='messages_submit' type='submit' value='Send' ></input>
-                </form>
+                <div className='messages_in_here'>
+                    {messageCards}
+                </div>
             </div>
+            <form className='messages_form' onSubmit={handleSubmit}>
+                <input className='messages_input' type='text' placeholder='message...' value={input} onChange={handleChange} ></input>
+                <input className='messages_submit' type='submit' value='Send' ></input>
+            </form>
         </div>
     )
 }

@@ -16,9 +16,10 @@
     flex-direction: column;
     justify-content: space-between;
     background-color: var(--background-color-dark);
-    border-radius: 20px;
+    /* border-radius: 20px; */
+    overflow-y: scroll;
     flex-grow: 1;
-    box-shadow: var(--main-color-light) 0px 5px 15px;
+    /* box-shadow: var(--main-color-light) 0px 5px 15px; */
 }
 
 .messages_form{
@@ -33,7 +34,7 @@
     background-color: var(--background-color-dark);
     color: var(--text-color);
     padding-left: 10px;
-    border-radius: 5px;
+    /* border-radius: 5px; */
 }
 
 .messages_input:focus{
@@ -50,5 +51,36 @@
     cursor: pointer;
     background-color: var(--main-color-light);
     color: var(--text-color);
+}
+
+.messages_in_here{
+    display: flex;
+    flex-direction: column;
+}
+
+.message_div_right{
+    background-color: var(--text-color);
+    color: var(--main-color);
+    align-self: flex-end;
+    width: max-content;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+}
+
+.message_div_left{
+    background-color: var(--main-color);
+    color: var(--text-color);
+    margin-left: 0;
+    width: max-content;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+}
+
+.message_date{
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 10px;
+    margin: 0;
 }
 
