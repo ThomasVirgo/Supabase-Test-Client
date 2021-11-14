@@ -45,16 +45,18 @@ const AddFriendModal = ({toggleModal}) => {
         setUsername('')
     }
 
-    const userCards = searchedUsers.map((user, idx) => <div key={idx}>
-        <h2>{user.data.username}</h2>
+    const userCards = searchedUsers.map((user, idx) => <div className='add_friend_card' key={idx}>
+        <span>{user.data.username}</span>
         <button onClick={() => sendRequest(user)}>Add friend</button>
     </div>)
 
     return (
         <div className='add_friend_modal_background'>
             <div className='add_friend_container'>
-                <StringInput placeholder='search username...' value={username} type='text' onChange={handleChange}/>
-                <h1 onClick={toggleModal}>X</h1>
+                <div className='add_friend_input_cross_container'>
+                    <StringInput placeholder='search username...' value={username} type='text' onChange={handleChange}/>
+                    <span className='modal_cross' onClick={toggleModal}>X</span>
+                </div>
                 <div className='add_friend_list'>
                     {userCards}
                 </div>
