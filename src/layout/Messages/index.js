@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext, useRef } from 'react'
 import { useParams } from 'react-router-dom';
 import { SupaBaseContext } from '../../context/supabase_client';
 import dayjs from 'dayjs';
@@ -12,18 +12,17 @@ const Messages = () => {
     const user = supabase.auth.user()
     const [input, setInput] = useState('')
     const [messages, setMessages] = useState([])
+    const messagesEndRef = useRef(null)
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+    }
+
+    useEffect(() => {
+        scrollToBottom()
+    }, [messages]);
 
     useEffect(()=>{
         async function fetchMessages(){
-            // const my_messages = await supabase
-            //     .from('messages')
-            //     .select('*')
-            //     .match({from_user: user.id, to_user: params.id})
-            // const their_messages = await supabase
-            //     .from('messages')
-            //     .select('*')
-            //     .match({from_user: params.id, to_user: user.id})
-
             const { data, error } = await supabase
                 .from('messages')
                 .select('*')
@@ -37,9 +36,35 @@ const Messages = () => {
         fetchMessages()
     }, [user, params, supabase])
 
+
+    console.log(supabase.getSubscriptions());
+
+
+    useEffect(()=>{
+        console.log('Running useEffect for messages subscription');
+        
+        function handleMessageInsert(payload){
+            let newMessage = payload.new
+            if ((newMessage.from_user === user.id && newMessage.to_user === params.id) || (newMessage.from_user === params.id && newMessage.to_user === user.id)){
+                setMessages(prevMessages => [...prevMessages, payload.new])
+            }
+            return
+        }
+        
+        const mySubscription = supabase
+                .from('messages')
+                .on('INSERT', handleMessageInsert)
+                .subscribe()
+        
+        return () => {
+            //remove subscriptions when component unmounts
+            supabase.removeSubscription(mySubscription)
+        }
+    }, [])
+
+
     async function handleSubmit(event){
         event.preventDefault()
-        console.log(input);
         setInput('')
         const { error } = await supabase.from('messages').insert([
             { from_user: user.id, to_user: params.id, content:input }
@@ -64,6 +89,7 @@ const Messages = () => {
             <div className='messages_container'>
                 <div className='messages_in_here'>
                     {messageCards}
+                    <div ref={messagesEndRef} />
                 </div>
             </div>
             <form className='messages_form' onSubmit={handleSubmit}>
