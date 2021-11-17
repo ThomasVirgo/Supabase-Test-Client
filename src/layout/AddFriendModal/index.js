@@ -16,7 +16,6 @@ const AddFriendModal = ({toggleModal}) => {
     const friendRequests = useSelector(state => state.friend_requests)
     const dispatch = useDispatch()
     const transformedUsers = transformUserData(searchedUsers)
-    console.log('transformed users', transformedUsers);
 
     useEffect(()=>{
         console.log('collecting user info');

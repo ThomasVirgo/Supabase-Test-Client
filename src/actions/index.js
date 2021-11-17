@@ -27,5 +27,19 @@ function addFriendRequest(data){
     }
 }
 
+function updateFriendRequest(from_user_id, hasAccepted){
+    return {
+        type: 'UPDATE_REQUEST',
+        payload: {from_user_id, hasAccepted}
+    }
+}
 
-export {initFriendRequests, initSentRequests, initFriends, addFriendRequest}
+function addFriend(data){
+    return {
+        type: 'ADD_FRIEND',
+        payload: data
+    }
+}
+
+
+export {initFriendRequests, initSentRequests, initFriends, addFriendRequest, updateFriendRequest, addFriend}

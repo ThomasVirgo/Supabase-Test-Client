@@ -32,6 +32,27 @@ const initState = {
                 ...state,
                 sent_requests: [...state.sent_requests, action.payload]
             }
+        case 'UPDATE_REQUEST':
+            let idx = state.friend_requests.findIndex(request => request.from_user_id === action.payload.from_user_id)
+            if (idx === -1){ 
+                console.log('could not find the request');
+                return state 
+            } 
+            let newRequests = [...state.friend_requests]
+            newRequests[idx] = {
+                ...newRequests[idx],
+                responded: true,
+                accepted: action.payload.hasAccepted
+            }
+            return {
+                ...state,
+                friend_requests: newRequests
+            }
+        case 'ADD_FRIEND':
+            return {
+                ...state,
+                friends: [...state.friends, action.payload]
+            }     
         default:
             return state;
     }
