@@ -1,0 +1,18 @@
+.game_container{
+    background-color: white;
+    border-radius: 20px;
+    width: 50vw;
+    height: 50vh;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.game_card{
+    width: 100px;
+    height: 100px;
+    background-color: violet;
+    border-radius: 20px;
+}

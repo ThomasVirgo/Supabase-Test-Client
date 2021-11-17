@@ -23,6 +23,7 @@ const Nav = () => {
                     <NavLink to='/'>Home</NavLink>
                     <NavLink to='/account'>Account</NavLink>
                     <NavLink to='/chat'>Chat</NavLink>
+                    <NavLink to='/game'>Game</NavLink>
                     <button onClick = {logout}>Logout</button>
                 </div>
             </>
