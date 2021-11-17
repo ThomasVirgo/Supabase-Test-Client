@@ -20,5 +20,12 @@ function initFriends(data){
     } 
 }
 
+function addFriendRequest(data){
+    return {
+        type: 'ADD_REQUEST',
+        payload: data
+    }
+}
 
-export {initFriendRequests, initSentRequests, initFriends}
+
+export {initFriendRequests, initSentRequests, initFriends, addFriendRequest}

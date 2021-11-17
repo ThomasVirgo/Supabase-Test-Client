@@ -27,7 +27,11 @@ const initState = {
                 ...state,
                 friends: action.payload
             }
-        
+        case 'ADD_REQUEST':
+            return {
+                ...state,
+                sent_requests: [...state.sent_requests, action.payload]
+            }
         default:
             return state;
     }

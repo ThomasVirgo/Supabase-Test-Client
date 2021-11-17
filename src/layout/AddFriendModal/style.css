@@ -19,6 +19,9 @@
     padding: 20px;
     box-shadow: var(--main-color) 0px 5px 15px;
 }
+.add_friend_list{
+    overflow-y: scroll;
+}
 
 .add_friend_card{
     display: flex;
