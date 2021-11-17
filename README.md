@@ -4,6 +4,7 @@
 - Add feedback on accepting/declining a friend request and update the state
 - add small pop ups for user feedback
 - add user profile image and use supabase storage
+- need to consider other table updates if a user updates their username
 
 
 ## Future features

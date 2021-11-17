@@ -37,9 +37,6 @@ const Messages = () => {
     }, [user, params, supabase])
 
 
-    console.log(supabase.getSubscriptions());
-
-
     useEffect(()=>{
         console.log('Running useEffect for messages subscription');
         
