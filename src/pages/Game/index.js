@@ -11,9 +11,9 @@ const Game = () => {
 
 
     function swapCards(){
-        if (player1Cards[1] === '2h'){
-            setPlayer1Cards(['As', '5s', '7c', 'Kc'])
-            setPlayer2Cards(['Jd', '8d', '2h', '3c'])
+        if (player1Cards[0] === 'As'){
+            setPlayer1Cards(['5s', '2h', '7c', 'Kc'])
+            setPlayer2Cards(['Jd', '8d', 'As', '3c'])
 
         } else {
             setPlayer1Cards(['As', '2h', '7c', 'Kc'])
