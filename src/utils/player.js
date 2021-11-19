@@ -20,4 +20,11 @@ class Player{
         })
         return score
     }
+
+    updateScore(){
+        this.score += this.calcCurrentScore()
+        this.score_history.push(this.score)
+    }
 }
+
+export default Player

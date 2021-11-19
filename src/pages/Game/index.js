@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion"
+import InitGame from "../../utils/initGame";
+import GameState from "../../utils/game";
 import './style.css'
 
 const Game = () => {
@@ -47,6 +49,19 @@ const Game = () => {
     let cards = []
     let suits = ["s", "d", "c", "h"];
     let values = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
+    const players = [
+        {
+            id: 1,
+            username: 'jeff',
+        },
+        {
+            id: 2,
+            username: 'bean',
+        },
+    ]
+    const new_game = new InitGame(players, 'jeff')
+    console.log(new GameState(new_game));
+    
     
 
     for (let i=0; i<suits.length; i++){

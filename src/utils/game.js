@@ -1,19 +1,13 @@
-const exampleGameState = {
-    players: [{}, {}, {}, {}],
-    deck: [],
-    pack: [],
-    turn: '13413fdwf4545',
-    isSlap: false,
-}
-
-class Game{
+class GameState{
     constructor(game_state, user){
         this.players = game_state.players
         this.deck = game_state.deck
         this.pack = game_state.pack
         this.turn = game_state.turn
         this.is_slap = game_state.is_slap
+        this.move_status = 'start'
         this.user = user
+        this.turn_count = game_state.turn_count
     }
 
     checkMyTurn(){
@@ -24,7 +18,9 @@ class Game{
     }
 
     getTopCardFromDeck() {
-        return this.deck.shift()
+        let card = this.deck.shift()
+        card.faceUp = true
+        return card
     }
 
     getTopCardFromPack() {
@@ -42,15 +38,29 @@ class Game{
         return order
     }
 
-    addScores(){
-        addScoreForPlayer(player){
-            let cards = player.cards
+    // moves
+    takeCardFromDeckIntoHand(chosenCard){
+        return
+    }
 
-        }
-        this.players.forEach(player => addScoreForPlayer(player))
+    takeCardFromDeckPlaceOnPack(chosenCard){
+        // need to look out for action cards
+        return
+    }
+
+    takeCardFromPack(chosenCard){
+        return
+    }
+
+    swapWithOtherPlayer(clientCard, theirCard){
+        return
+    }
+
+    playMultiple(cards){
+        return
     }
 
 
 }
 
-export default Game
+export default GameState
