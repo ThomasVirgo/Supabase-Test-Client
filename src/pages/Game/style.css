@@ -1,17 +1,21 @@
 .game_container{
     background-color: white;
     border-radius: 20px;
-    width: 50vw;
-    height: 50vh;
+    width: 95vw;
+    height: calc(100vh - 150px);
     margin: auto;
+    margin-top: 10px;
+    padding: 10px;
     display: grid;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
     grid-template-areas: 
     ". card12 card11 card10 card9 ."
-    ". . . . . ."
-    ". . card17 card18 . ."
-    ". . . . . ."
+    "card13 . . . . card8"
+    "card14 . . . . card7"
+    "card15 . card17 card18 . card6"
+    "card16 . . . . card5"
     ". card1 card2 card3 card4 .";
 }
 

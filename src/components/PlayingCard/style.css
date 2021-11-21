@@ -1,0 +1,48 @@
+.card-container {
+    background-color: white;
+    width: 50px;
+    height: 70px;
+    margin: 0px;
+    padding: 5px;
+    border-radius: 3px;
+    border: darkred solid 3px;
+    box-shadow: 1px 1px 5px #000;
+}
+
+.card-container:hover {
+    border: black solid 3px;
+    cursor: pointer;
+}
+
+.card-top{
+    font-size: small;
+}
+
+.card-bottom{
+    font-size: small;
+}
+
+.h1-suit{
+    margin:0;
+    text-align: center;
+}
+
+.card-bottom{
+    text-align: right;
+}
+
+.value-red {
+    color:red;
+}
+
+.value-black {
+    color: black;
+}
+
+@media screen and (max-height: 800px){
+    .card-container{
+        width:34px;
+        height: 45px;
+        font-size: 10px;
+    }
+}

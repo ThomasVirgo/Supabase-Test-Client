@@ -9,13 +9,16 @@ class Player{
     }
 
     calcCurrentScore(){
-        let pictureCards = 'AJQK'
+        let pictureCards = 'JQK'
         let score = 0
         this.cards.forEach(card => {
             if (pictureCards.includes(card.value)){
                 score += 10
-            } else {
-                score += card.value
+            } else if(card.value === 'A'){
+                score += 1
+            }
+            else {
+                score += Number(card.value)
             }
         })
         return score
