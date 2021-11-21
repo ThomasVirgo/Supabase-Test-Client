@@ -6,6 +6,7 @@ class Player{
         this.score_history = score_history
         this.score = score
         this.inHandScore = this.calcCurrentScore()
+        this.isReady = false
     }
 
     calcCurrentScore(){

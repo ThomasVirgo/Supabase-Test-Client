@@ -2,12 +2,11 @@ import Player from "./player"
 import Card from "./card"
 
 class InitGame{
-    constructor(players, user){
+    constructor(players){
         this.deck = this.createDeck()
         this.players = this.createPlayers(players)
         this.pack = []
         this.turn = this.players[0].id
-        this.user = user
         this.is_slap = false
         this.turn_count = 0
     }
@@ -29,7 +28,8 @@ class InitGame{
     }
 
     createPlayers(players){
-        return players.map(player => new Player(player.id, player.username, this.selectCards(), [], 0))
+        // to begin with give players no cards, then once all players have joined deal the cards
+        return players.map(player => new Player(player.id, player.username, [], [], 0))
     }
 
     selectCards(){
