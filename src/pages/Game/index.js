@@ -60,7 +60,20 @@ const Game = () => {
             console.log('could not find player to update ready state');
         }
     }
+
+    function takeCardFromDeck(){
+        let newState = new GameState(gameState, user)
+        newState.takeCardFromDeck()
+        newState.move_status = 'taken card from deck'
+        setGameState(newState)
+    }
     
+    function playCardToPack(){
+        let newState = new GameState(gameState, user)
+        newState.playCardToPack()
+        newState.move_status = 'played card to pack'
+        setGameState(newState)
+    }
 
     let cards = []
     let suits = ["spade", "diamond", "club", "heart"];
@@ -90,8 +103,14 @@ const Game = () => {
         <div className='game_buttons_container'>
             {!isReady && <button onClick={readyUp}>Ready</button>}
             {isReady && gameState.checkMyTurn() && <div className = 'play_buttons_container'>
-                <button>Take Card From Deck</button>
+                {gameState.move_status == 'start' && <div>
+                <button onClick = {takeCardFromDeck}>Take Card From Deck</button>
                 <button>Take Card From Pack</button>
+                </div>}
+                {gameState.move_status == 'taken card from deck' && <div>
+                <button >Swap with card from my hand</button>
+                <button onClick = {playCardToPack}>Play card to pack</button>
+                </div>}
             </div>}
         </div>
         </>

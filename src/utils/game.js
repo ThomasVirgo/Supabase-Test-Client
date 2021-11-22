@@ -7,6 +7,7 @@ class GameState{
         this.move_status = 'start'
         this.user = user
         this.turn_count = game_state.turn_count
+        this.belowDeck = game_state.belowDeck
     }
 
     checkMyTurn(){
@@ -50,6 +51,9 @@ class GameState{
 
     findCardPosition(card){
         // return the class name for that card position
+        if (this?.belowDeck?.id === card.id){
+            return ['card19', true]
+        }
         let order = this.getPlayerOrder()
         let idxOneToFour = order[0].cards.findIndex(item => item.id === card.id )
         if (idxOneToFour != -1){
@@ -92,6 +96,18 @@ class GameState{
     }
 
     // moves
+    takeCardFromDeck(){
+        this.belowDeck = this.deck.pop()
+        this.belowDeck.faceUp = true
+    }
+
+    playCardToPack(){
+        this.pack.push(this.belowDeck)
+        // need to check here if its an action card
+        this.belowDeck = null
+    }
+
+
     takeCardFromDeckIntoHand(chosenCard){
         return
     }

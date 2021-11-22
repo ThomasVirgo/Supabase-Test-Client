@@ -15,7 +15,7 @@
     "card13 . . . . card8"
     "card14 . . . . card7"
     "card15 . card17 card18 . card6"
-    "card16 . . . . card5"
+    "card16 . card19 . . card5"
     ". card1 card2 card3 card4 .";
 }
 
@@ -82,5 +82,8 @@
 }
 .card18{
     grid-area: card18;
+}
+.card19{
+    grid-area: card19;
 }
 
