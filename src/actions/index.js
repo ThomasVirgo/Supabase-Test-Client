@@ -41,5 +41,12 @@ function addFriend(data){
     }
 }
 
+function changeRoomName(name){
+    return {
+        type: 'CHANGE_ROOM',
+        payload: name
+    }
+}
 
-export {initFriendRequests, initSentRequests, initFriends, addFriendRequest, updateFriendRequest, addFriend}
+
+export {initFriendRequests, initSentRequests, initFriends, addFriendRequest, updateFriendRequest, addFriend, changeRoomName}

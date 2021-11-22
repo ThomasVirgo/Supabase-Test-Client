@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { motion } from "framer-motion"
+import { useSelector } from "react-redux";
+import { SupaBaseContext } from "../../context/supabase_client";
 import InitGame from "../../utils/initGame";
 import GameState from "../../utils/game";
 import Card from "../../utils/card";
@@ -8,31 +10,33 @@ import './style.css'
 
 const Game = () => {
     const [gameState, setGameState] = useState()
-
+    const roomName = useSelector(state => state.room_name)
+    const supabase = useContext(SupaBaseContext)
+    const user = supabase.auth.user()
 
     useEffect(()=>{
-        const players = [
-            {
-                id: 1,
-                username: 'jeff',
-            },
-            {
-                id: 2,
-                username: 'bean',
-            },
-            {
-                id: 3,
-                username: 'turdo',
-            },
-            {
-                id: 4,
-                username: 'gipo',
-            },
-        ]
-        let new_game = new InitGame(players, players[0])
-        new_game = new GameState(new_game, players[0])
-        console.log(new_game);
-        setGameState(new_game)
+        async function fetchGameAndSubscribe(){
+            const { data, error } = await supabase
+                .from('games')
+                .select('game_state')
+                .match({'room_name': roomName})
+            console.log('getting game state...');
+            if (data.length == 0){ return }
+            let game_state = data[0]?.game_state
+            let new_game_state = new GameState(game_state, user)
+            setGameState(new_game_state)
+            const mySubscription = supabase
+                .from('games')
+                .on('UPDATE', payload => {
+                    console.log('Change received!', payload.new)
+                })
+                .subscribe()
+            console.log('created new subscription');
+            return mySubscription
+        }
+        let mySubscription = fetchGameAndSubscribe()
+
+        return () => supabase.removeSubscription(mySubscription)
     }, [])
     
 

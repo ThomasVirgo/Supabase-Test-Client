@@ -2,6 +2,8 @@ import React, { useState, useContext } from "react";
 import { SupaBaseContext } from "../../context/supabase_client";
 import InitGame from "../../utils/initGame";
 import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
+import { changeRoomName } from "../../actions";
 import Player from "../../utils/player";
 
 const Play = () => {
@@ -12,6 +14,7 @@ const Play = () => {
     const supabase = useContext(SupaBaseContext)
     const user = supabase.auth.user()
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     function makeid(length) {
         let result = '';
@@ -46,6 +49,7 @@ const Play = () => {
                 { room_name: inputs.create, game_state: newGame }
             ])
         console.log(error?.message);
+        dispatch(changeRoomName(inputs.create))
         navigate('/game')
     }
 
@@ -66,7 +70,11 @@ const Play = () => {
                     .from('games')
                     .update({ game_state: game_state })
                     .match({ room_name: inputs.join })
-            if (!response.error){ navigate('/game') }
+            if (!response.error){
+                // try and change to something that persists in the database so user can reload game page and still works
+                dispatch(changeRoomName(inputs.join))
+                navigate('/game') 
+            }
         }
     }
 

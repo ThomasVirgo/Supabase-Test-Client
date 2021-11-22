@@ -2,6 +2,7 @@ const initState = {
     friend_requests: [],
     sent_requests: [],
     friends: [],
+    room_name: ''
   }
   
   const reducer = (state=initState, action) => {
@@ -52,7 +53,12 @@ const initState = {
             return {
                 ...state,
                 friends: [...state.friends, action.payload]
-            }     
+            } 
+        case 'CHANGE_ROOM':
+            return {
+                ...state,
+                room_name: action.payload
+            }    
         default:
             return state;
     }
