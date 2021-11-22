@@ -2,7 +2,7 @@
     background-color: white;
     border-radius: 20px;
     width: 95vw;
-    height: calc(100vh - 150px);
+    height: 80vh;
     margin: auto;
     margin-top: 10px;
     padding: 10px;
@@ -19,11 +19,14 @@
     ". card1 card2 card3 card4 .";
 }
 
-.game_card{
-    width: 100px;
-    height: 100px;
-    background-color: violet;
+.game_buttons_container{
+    background-color: white;
     border-radius: 20px;
+    width: 95vw;
+    height: 10vh;
+    margin: auto;
+    margin-top: 10px;
+    padding: 10px;
 }
 
 .card1{

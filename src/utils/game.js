@@ -18,6 +18,14 @@ class GameState{
         return false
     }
 
+    dealCards(){
+        this.players.forEach(player => player.cards = this.deck.splice(0, 4))
+    }
+
+    getMyPlayerInfo(){
+        return this.players.find(element => element.id === this.user.id)
+    }
+
     getTopCardFromDeck() {
         let card = this.deck.shift()
         card.faceUp = true
