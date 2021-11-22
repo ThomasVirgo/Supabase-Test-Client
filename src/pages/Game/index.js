@@ -71,7 +71,8 @@ const Game = () => {
         for (let i=0; i<suits.length; i++){
             for (let j=0; j<values.length; j++){
                 let newCard = new Card(values[j], suits[i])
-                cards.push(<motion.div layout transition={{ duration: 2 }} className={gameState.findCardPosition(newCard)}><PlayingCard value={values[j]} suit={suits[i]} faceUp={true}/></motion.div>)
+                let [className, isFaceUp] = gameState.findCardPosition(newCard)
+                cards.push(<motion.div layout transition={{ duration: 2 }} className={className}><PlayingCard value={values[j]} suit={suits[i]} faceUp={isFaceUp}/></motion.div>)
             }
         }
         playerInfo = gameState.getMyPlayerInfo()

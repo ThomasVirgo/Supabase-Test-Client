@@ -53,13 +53,15 @@ class GameState{
         let order = this.getPlayerOrder()
         let idxOneToFour = order[0].cards.findIndex(item => item.id === card.id )
         if (idxOneToFour != -1){
-            return `card${idxOneToFour+1}`
+            let isFaceUp = order[0].cards[idxOneToFour].faceUp
+            return [`card${idxOneToFour+1}`, isFaceUp]
         }
         // if theres only two players then immediately need to go to cards 9 to 12
         if (this.players.length == 2){
             let idxNineToTwelve = order[1].cards.findIndex(item => item.id === card.id )
             if (idxNineToTwelve != -1){
-                return `card${idxNineToTwelve+9}`
+                let isFaceUp = order[1].cards[idxNineToTwelve].faceUp
+                return [`card${idxNineToTwelve+9}`, isFaceUp]
             }
         }
         // otherwise can just go around the group
@@ -67,20 +69,23 @@ class GameState{
             let player = order[i]
             let cardIdx = player.cards.findIndex(item => item.id === card.id)
             if (cardIdx != -1){
-                return `card${(i*4)+cardIdx+1}`
+                let isFaceUp = player.cards[cardIdx].faceUp
+                return [`card${(i*4)+cardIdx+1}`, isFaceUp]
             }
         }
 
         //otherwise the card must be either in the deck or the pack
         for (let i=0; i<this.pack.length; i++){
             if (this.pack[i].id === card.id){
-                return 'card18'
+                let isFaceUp = this.pack[i].faceUp
+                return ['card18', isFaceUp]
             }
         }
 
         for (let i=0; i<this.deck.length; i++){
             if (this.deck[i].id === card.id){
-                return 'card17'
+                let isFaceUp = this.deck[i].faceUp
+                return ['card17', isFaceUp]
             }
         }
         
