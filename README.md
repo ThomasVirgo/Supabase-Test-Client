@@ -8,6 +8,8 @@
 - change storing room name in redux to persisting something in db so users can refresh page / disconnect and rejoin
 - deal cards once host says so, not once all players ready
 - dont let extra players join past 4 players or if game has started
+- ensure top of pack shows and not just the highest one
+- sort pack cards disappearing too early
 
 
 

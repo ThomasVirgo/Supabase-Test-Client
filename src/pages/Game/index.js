@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from "react";
 import { motion } from "framer-motion"
 import { useSelector } from "react-redux";
 import { SupaBaseContext } from "../../context/supabase_client";
-import InitGame from "../../utils/initGame";
 import GameState from "../../utils/game";
 import Card from "../../utils/card";
 import { PlayingCard } from "../../components";
@@ -61,6 +60,13 @@ const Game = () => {
         }
     }
 
+    async function updateDatabaseState(newState){
+        let response = await supabase
+                    .from('games')
+                    .update({ game_state: newState })
+                    .match({ room_name: roomName })
+    }
+
     function takeCardFromDeck(){
         let newState = new GameState(gameState, user)
         newState.takeCardFromDeck()
@@ -68,11 +74,11 @@ const Game = () => {
         setGameState(newState)
     }
     
-    function playCardToPack(){
+    async function playCardToPack(){
         let newState = new GameState(gameState, user)
         newState.playCardToPack()
-        newState.move_status = 'played card to pack'
-        setGameState(newState)
+        newState.move_status = 'start'
+        updateDatabaseState(newState)
     }
 
     let cards = []
@@ -84,8 +90,8 @@ const Game = () => {
         for (let i=0; i<suits.length; i++){
             for (let j=0; j<values.length; j++){
                 let newCard = new Card(values[j], suits[i])
-                let [className, isFaceUp] = gameState.findCardPosition(newCard)
-                cards.push(<motion.div layout transition={{ duration: 2 }} className={className}><PlayingCard value={values[j]} suit={suits[i]} faceUp={isFaceUp}/></motion.div>)
+                let [className, isFaceUp, isNotTopOfPack] = gameState.findCardPosition(newCard)
+                cards.push(<motion.div layout transition={{ duration: 2 }} className={className}><PlayingCard value={values[j]} suit={suits[i]} faceUp={isFaceUp} isNotTopOfPack={isNotTopOfPack}/></motion.div>) 
             }
         }
         playerInfo = gameState.getMyPlayerInfo()
@@ -103,10 +109,12 @@ const Game = () => {
         <div className='game_buttons_container'>
             {!isReady && <button onClick={readyUp}>Ready</button>}
             {isReady && gameState.checkMyTurn() && <div className = 'play_buttons_container'>
-                {gameState.move_status == 'start' && <div>
-                <button onClick = {takeCardFromDeck}>Take Card From Deck</button>
-                <button>Take Card From Pack</button>
-                </div>}
+                {gameState.move_status == 'start' && gameState.players.every(player => player.isReady) && 
+                <div>
+                    <button onClick = {takeCardFromDeck}>Take Card From Deck</button>
+                    <button>Take Card From Pack</button>
+                </div>
+                }
                 {gameState.move_status == 'taken card from deck' && <div>
                 <button >Swap with card from my hand</button>
                 <button onClick = {playCardToPack}>Play card to pack</button>

@@ -1,7 +1,7 @@
 import React from 'react';
 import './style.css'
 
-const PlayingCard = ({value, suit, faceUp}) => {
+const PlayingCard = ({value, suit, faceUp, isNotTopOfPack}) => {
 
     let symbols = {
         'diamond':'\u2666',
@@ -28,6 +28,16 @@ const PlayingCard = ({value, suit, faceUp}) => {
         cardStyle = {};
     }
 
+    if (isNotTopOfPack){
+        cardStyle = {
+            ...cardStyle,
+            display: 'none'
+        }
+        cardColor = {
+            ...cardColor,
+            display: 'none'
+        }
+    } 
 
     return (
         <div className = 'card-container' style={cardColor}>

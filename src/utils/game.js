@@ -52,20 +52,20 @@ class GameState{
     findCardPosition(card){
         // return the class name for that card position
         if (this?.belowDeck?.id === card.id){
-            return ['card19', true]
+            return ['card19', true, false]
         }
         let order = this.getPlayerOrder()
         let idxOneToFour = order[0].cards.findIndex(item => item.id === card.id )
         if (idxOneToFour != -1){
             let isFaceUp = order[0].cards[idxOneToFour].faceUp
-            return [`card${idxOneToFour+1}`, isFaceUp]
+            return [`card${idxOneToFour+1}`, isFaceUp, false]
         }
         // if theres only two players then immediately need to go to cards 9 to 12
         if (this.players.length == 2){
             let idxNineToTwelve = order[1].cards.findIndex(item => item.id === card.id )
             if (idxNineToTwelve != -1){
                 let isFaceUp = order[1].cards[idxNineToTwelve].faceUp
-                return [`card${idxNineToTwelve+9}`, isFaceUp]
+                return [`card${idxNineToTwelve+9}`, isFaceUp, false]
             }
         }
         // otherwise can just go around the group
@@ -74,7 +74,7 @@ class GameState{
             let cardIdx = player.cards.findIndex(item => item.id === card.id)
             if (cardIdx != -1){
                 let isFaceUp = player.cards[cardIdx].faceUp
-                return [`card${(i*4)+cardIdx+1}`, isFaceUp]
+                return [`card${(i*4)+cardIdx+1}`, isFaceUp, false]
             }
         }
 
@@ -82,14 +82,18 @@ class GameState{
         for (let i=0; i<this.pack.length; i++){
             if (this.pack[i].id === card.id){
                 let isFaceUp = this.pack[i].faceUp
-                return ['card18', isFaceUp]
+                let inPackButNotTop = true;
+                if (i === this.pack.length - 1){
+                    inPackButNotTop = false
+                }
+                return ['card18', isFaceUp, inPackButNotTop]
             }
         }
 
         for (let i=0; i<this.deck.length; i++){
             if (this.deck[i].id === card.id){
                 let isFaceUp = this.deck[i].faceUp
-                return ['card17', isFaceUp]
+                return ['card17', isFaceUp, false]
             }
         }
         
@@ -103,8 +107,13 @@ class GameState{
 
     playCardToPack(){
         this.pack.push(this.belowDeck)
+        let actionCards = '78910JQK'
+        if (actionCards.includes(this.belowDeck.value)){
+            console.log('Allow user to play action action');
+        }
         // need to check here if its an action card
         this.belowDeck = null
+        this.turn_count += 1
     }
 
 
