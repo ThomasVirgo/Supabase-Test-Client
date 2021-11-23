@@ -10,6 +10,8 @@
 ### Priority
 - show users joining on game page and show the game code
 - allow users to see their first two cards before starting
+- update player scores and score history on completing a turn
+- create a method called finishTurn for DRY code
 
 
 

@@ -48,7 +48,7 @@ const Game = () => {
             let allPlayersReady = newState.players.every(player => player.isReady)
             if (allPlayersReady){
                 newState = new GameState(gameState, user)
-                newState.dealCards()
+                newState.message = `${newState.getUsernameOfPlayersTurn()}! It's your turn.`
                 newState.players[idx].isReady = true
             }
             let response = await supabase
@@ -58,6 +58,14 @@ const Game = () => {
         } else {
             console.log('could not find player to update ready state');
         }
+    }
+
+    function dealCards(){
+        let newState = new GameState(gameState, user)
+        newState.dealCards()
+        newState.gameStarted = true
+        newState.message = 'Waiting for all players to be ready, remember the cards!'
+        updateDatabaseState(newState)
     }
 
     async function updateDatabaseState(newState){
@@ -127,6 +135,9 @@ const Game = () => {
             for (let j=0; j<values.length; j++){
                 let newCard = new Card(values[j], suits[i])
                 let [className, isFaceUp, packPos] = gameState.findCardPosition(newCard)
+                if (gameState.message === 'Waiting for all players to be ready, remember the cards!' && (className==='card1' || className==='card2')){
+                    isFaceUp = true;
+                }
                 cards.push(<motion.div onClick={()=>cardClicked(newCard)} layout transition={{ duration: 1.5 }} className={className}><PlayingCard value={values[j]} suit={suits[i]} faceUp={isFaceUp} packPos={packPos}/></motion.div>) 
             }
         }
@@ -143,22 +154,34 @@ const Game = () => {
             
         </motion.div>
         <div className='game_buttons_container'>
-            {!isReady && <button onClick={readyUp}>Ready</button>}
-            {isReady && gameState.checkMyTurn() && <div className = 'play_buttons_container'>
-                {gameState.move_status == 'start' && gameState.players.every(player => player.isReady) && 
-                <div>
-                    <button onClick = {takeCardFromDeck}>Take Card From Deck</button>
-                    <button onClick = {takeCardFromPack}>Take Card From Pack</button>
-                </div>
+            <div>
+                {!gameState?.gameStarted && gameState?.checkMyTurn() && <button onClick={dealCards}>Deal Cards</button>}
+                {gameState?.gameStarted && !isReady && <button onClick={readyUp}>Ready</button>}
+
+                {isReady && gameState?.checkMyTurn() && 
+                    <div className = 'play_buttons_container'>
+                        {gameState?.move_status == 'start' && gameState?.players.every(player => player.isReady) && 
+                        <div>
+                            <button onClick = {takeCardFromDeck}>Take Card From Deck</button>
+                            <button onClick = {takeCardFromPack}>Take Card From Pack</button>
+                        </div>
+                        }
+                        {gameState?.move_status == 'taken card' && 
+                        <div>
+                        <button onClick = {selectSwap} >Swap with card from my hand</button>
+                        <button onClick = {playCardToPack}>Play card to pack</button>
+                        <button onClick = {() => playMultiple('2')} >Play double</button>
+                        <button onClick = {() => playMultiple('3')} >Play triple</button>
+                        <button onClick = {() => playMultiple('4')} >Play quad</button>
+                        </div>
+                        }
+                    </div>
                 }
-                {gameState.move_status == 'taken card' && <div>
-                <button onClick = {selectSwap} >Swap with card from my hand</button>
-                <button onClick = {playCardToPack}>Play card to pack</button>
-                <button onClick = {() => playMultiple('2')} >Play double</button>
-                <button onClick = {() => playMultiple('3')} >Play triple</button>
-                <button onClick = {() => playMultiple('4')} >Play quad</button>
-                </div>}
-            </div>}
+            </div>
+            <div className='info_container'>
+                <p>{gameState?.message}</p>
+                <p>Your game code is: <strong>{roomName}</strong></p>
+            </div>
         </div>
         </>
     )

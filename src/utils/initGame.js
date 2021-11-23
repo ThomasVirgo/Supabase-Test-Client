@@ -9,7 +9,9 @@ class InitGame{
         this.move_status = 'start'
         this.turn = this.players[0].id
         this.is_slap = false
+        this.message = 'Waiting for players to join'
         this.multiCards = []
+        this.gameStarted = false
         this.turn_count = 0
     }
     

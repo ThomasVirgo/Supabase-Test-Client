@@ -6,6 +6,8 @@ class GameState{
         this.is_slap = game_state.is_slap
         this.move_status = game_state.move_status
         this.user = user
+        this.message = game_state.message
+        this.gameStarted = game_state.gameStarted
         this.multiCards = game_state.multiCards
         this.turn_count = game_state.turn_count
         this.belowDeck = game_state.belowDeck
@@ -18,6 +20,12 @@ class GameState{
             return true
         }
         return false
+    }
+
+    getUsernameOfPlayersTurn(){
+        let n = this.players.length
+        let playerTurn = this.players[(this.turn_count % n + n) % n];
+        return playerTurn.username
     }
 
     dealCards(){
@@ -111,6 +119,7 @@ class GameState{
         // need to check here if its an action card
         this.belowDeck = null
         this.turn_count += 1
+        this.message = `${this.getUsernameOfPlayersTurn()}! It's your turn.`
     }
 
     takeCardFromPack(){
@@ -129,6 +138,7 @@ class GameState{
         this.belowDeck= null
         this.pack.push(cardToPack)
         this.turn_count += 1
+        this.message = `${this.getUsernameOfPlayersTurn()}! It's your turn.`
         this.move_status = 'start'
     }
 
@@ -165,6 +175,7 @@ class GameState{
                 this.multiCards = []
                 this.move_status='start'
                 this.turn_count+=1
+                this.message = `${this.getUsernameOfPlayersTurn()}! It's your turn.`
             }
         }
     }
