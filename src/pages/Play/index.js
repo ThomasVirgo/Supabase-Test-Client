@@ -43,13 +43,14 @@ const Play = () => {
             }
         ]
         let newGame = new InitGame(players)
+        let roomName = makeid(6)
         const { data, error } = await supabase
             .from('games')
             .insert([
-                { room_name: inputs.create, game_state: newGame }
+                { room_name: roomName, game_state: newGame }
             ])
         console.log(error?.message);
-        dispatch(changeRoomName(inputs.create))
+        dispatch(changeRoomName(roomName))
         navigate('/game')
     }
 
@@ -81,8 +82,8 @@ const Play = () => {
     return (
         <div>
             <form onSubmit={handleCreate}>
-                <p>Create a game, come up with a room name and enter below</p>
-                <input type='text' name='create' onChange={handleChange} value={inputs.create} placeholder='room name'></input>
+                <p>Create a game, generate a game code by clicking button below</p>
+                {/* <input type='text' name='create' onChange={handleChange} value={inputs.create} placeholder='room name'></input> */}
                 <input type='submit' value='Create Game'></input>
             </form>
             <form onSubmit={handleJoin}>

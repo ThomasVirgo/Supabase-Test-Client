@@ -155,7 +155,7 @@ class GameState{
                     // push the cards to the pack and remove them from hand
                     let cardToPack = myNewCards.splice(cIdx, 1)[0]
                     cardToPack.faceUp = true;
-                    this.pack.push() //splice returns an array
+                    this.pack.push(cardToPack) //splice returns an array
                 })
                 this.belowDeck.faceUp = false
                 myNewCards.push(this.belowDeck)
