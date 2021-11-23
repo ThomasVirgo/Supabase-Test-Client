@@ -145,7 +145,7 @@ const Game = () => {
         isReady = playerInfo.isReady
     }
 
-    let playerPopUps = gameState.players.map(player => <div className={gameState.findProfileClass(player)}>
+    let playerPopUps = gameState?.players.map(player => <div className={gameState.findProfileClass(player)}>
         <PlayerPopUp player={player}></PlayerPopUp>
         </div>)
 

@@ -29,6 +29,7 @@ class GameState{
         this.move_status='start'
         let playerIdx = this.getTurnPlayerIdx()
         this.players[playerIdx].updateScores()
+        this.belowDeck = null
         this.turn_count+=1
         this.message = `${this.getUsernameOfPlayersTurn()}! It's your turn.`
     }
@@ -164,7 +165,7 @@ class GameState{
         cardToPack.faceUp = true
         myCards[idx] = this.belowDeck
         myCards[idx].faceUp = false
-        this.belowDeck= null
+        this.belowDeck = null
         this.pack.push(cardToPack)
         this.finishTurn()
     }
