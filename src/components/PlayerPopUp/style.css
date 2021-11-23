@@ -1,0 +1,27 @@
+.playerInfo{
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.playerInfo p{
+    color: black;
+}
+
+.popup_top{
+    display: flex;
+    justify-content: space-between;
+}
+
+.popup_close:hover{
+    color: red;
+    cursor: pointer;
+}
+
+.player_popup_icon{
+    font-size: 20px;
+}
+
+.player_popup_icon:hover{
+    cursor: pointer;
+}

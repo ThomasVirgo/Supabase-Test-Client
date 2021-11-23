@@ -8,12 +8,10 @@
 - dont let extra players join past 4 players or if game has started
 
 ### Priority
-- show users joining on game page and show the game code
-- allow users to see their first two cards before starting
+- show users joining on game page, add hover pop ups with username and total score
 - update player scores and score history on completing a turn
 - create a method called finishTurn for DRY code
-
-
+- implement action cards, i.e. 7,8,9,10,J,Q
 
 ## Future features
 - integrate gifs into messages

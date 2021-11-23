@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { SupaBaseContext } from "../../context/supabase_client";
 import GameState from "../../utils/game";
 import Card from "../../utils/card";
-import { PlayingCard } from "../../components";
+import { PlayingCard, PlayerPopUp } from "../../components";
 import './style.css'
 
 const Game = () => {
@@ -145,12 +145,17 @@ const Game = () => {
         isReady = playerInfo.isReady
     }
 
+    let playerPopUps = gameState.players.map(player => <div className={gameState.findProfileClass(player)}>
+        <PlayerPopUp player={player}></PlayerPopUp>
+        </div>)
+
 
     return (
         <>
         <motion.div className='game_container'>
             
             {cards}
+            {playerPopUps}
             
         </motion.div>
         <div className='game_buttons_container'>

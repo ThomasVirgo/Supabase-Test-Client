@@ -33,7 +33,7 @@ class InitGame{
 
     createPlayers(players){
         // to begin with give players no cards, then once all players have joined deal the cards
-        return players.map(player => new Player(player.id, player.username, [], [], 0))
+        return players.map(player => new Player(player.id, player.username, [], [], 0, false))
     }
 
     selectCards(){

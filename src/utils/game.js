@@ -1,6 +1,8 @@
+import Player from "./player"
+
 class GameState{
     constructor(game_state, user){
-        this.players = game_state.players
+        this.players = game_state.players.map(player => new Player(player.id, player.username, player.cards, player.score_history, player.score, player.isReady))
         this.deck = game_state.deck
         this.pack = game_state.pack
         this.is_slap = game_state.is_slap
@@ -22,10 +24,25 @@ class GameState{
         return false
     }
 
+    finishTurn(){
+        this.multiCards = []
+        this.move_status='start'
+        let playerIdx = this.getTurnPlayerIdx()
+        this.players[playerIdx].updateScores()
+        this.turn_count+=1
+        this.message = `${this.getUsernameOfPlayersTurn()}! It's your turn.`
+    }
+
     getUsernameOfPlayersTurn(){
         let n = this.players.length
         let playerTurn = this.players[(this.turn_count % n + n) % n];
         return playerTurn.username
+    }
+
+    getTurnPlayerIdx(){
+        let n = this.players.length
+        let player =  this.players[(this.turn_count % n + n) % n];
+        return this.players.findIndex(p => p.id === player.id)
     }
 
     dealCards(){
@@ -56,6 +73,19 @@ class GameState{
             order.push(val)
         }
         return order
+    }
+
+    findProfileClass(player){
+        if (player.id === this.user.id){
+            return 'profile1'
+        }
+        if (player.id != this.user.id && this.players.length === 2){
+            return 'profile3'
+        }
+
+        let playerIdx = this.getPlayerOrder().findIndex(p => p.id === player.id)
+        return `profile${playerIdx+1}`
+
     }
 
     findCardPosition(card){
@@ -118,8 +148,7 @@ class GameState{
         }
         // need to check here if its an action card
         this.belowDeck = null
-        this.turn_count += 1
-        this.message = `${this.getUsernameOfPlayersTurn()}! It's your turn.`
+        this.finishTurn()
     }
 
     takeCardFromPack(){
@@ -137,9 +166,7 @@ class GameState{
         myCards[idx].faceUp = false
         this.belowDeck= null
         this.pack.push(cardToPack)
-        this.turn_count += 1
-        this.message = `${this.getUsernameOfPlayersTurn()}! It's your turn.`
-        this.move_status = 'start'
+        this.finishTurn()
     }
 
     addCardToMulti(card){
@@ -172,10 +199,7 @@ class GameState{
                 this.belowDeck = null
                 let playerIdx = this.players.findIndex(player => player.id === this.user.id)
                 this.players[playerIdx].cards = myNewCards
-                this.multiCards = []
-                this.move_status='start'
-                this.turn_count+=1
-                this.message = `${this.getUsernameOfPlayersTurn()}! It's your turn.`
+                this.finishTurn()
             }
         }
     }

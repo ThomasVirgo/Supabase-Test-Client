@@ -1,12 +1,12 @@
 class Player{
-    constructor(id, username, cards, score_history, score){
+    constructor(id, username, cards, score_history, score, isReady){
         this.id = id
         this.username = username
         this.cards = cards
         this.score_history = score_history
         this.score = score
         this.inHandScore = this.calcCurrentScore()
-        this.isReady = false
+        this.isReady = isReady
     }
 
     calcCurrentScore(){
@@ -25,9 +25,8 @@ class Player{
         return score
     }
 
-    updateScore(){
-        this.score += this.calcCurrentScore()
-        this.score_history.push(this.score)
+    updateScores(){
+        this.score_history.push(this.inHandScore)
     }
 }
 
