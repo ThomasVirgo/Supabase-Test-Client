@@ -70,7 +70,14 @@ const Game = () => {
     function takeCardFromDeck(){
         let newState = new GameState(gameState, user)
         newState.takeCardFromDeck()
-        newState.move_status = 'taken card from deck'
+        newState.move_status = 'taken card'
+        setGameState(newState)
+    }
+
+    function takeCardFromPack(){
+        let newState = new GameState(gameState, user)
+        newState.takeCardFromPack()
+        newState.move_status = 'taken card'
         setGameState(newState)
     }
     
@@ -79,6 +86,35 @@ const Game = () => {
         newState.playCardToPack()
         newState.move_status = 'start'
         updateDatabaseState(newState)
+    }
+
+    async function selectSwap(){
+        let newState = new GameState(gameState, user)
+        newState.move_status = 'selecting card'
+        setGameState(newState)
+    }
+
+    function playMultiple(howMany){
+        let newState = new GameState(gameState, user)
+        newState.move_status = `selecting multiple ${howMany}`
+        console.log('clicked play multiple', newState);
+        setGameState(newState)
+    }
+
+    function cardClicked(card){
+        console.log(card);
+        if (gameState.move_status == 'selecting card'){
+            let newState = new GameState(gameState, user)
+            newState.swapWithCardFromHand(card)
+            updateDatabaseState(newState)
+        }
+        if (gameState.move_status.includes('selecting multiple')){
+            let newState = new GameState(gameState, user)
+            newState.addCardToMulti(card)
+            if (newState.move_status === 'start'){
+                updateDatabaseState(newState)
+            }
+        }
     }
 
     let cards = []
@@ -90,8 +126,8 @@ const Game = () => {
         for (let i=0; i<suits.length; i++){
             for (let j=0; j<values.length; j++){
                 let newCard = new Card(values[j], suits[i])
-                let [className, isFaceUp, isNotTopOfPack] = gameState.findCardPosition(newCard)
-                cards.push(<motion.div layout transition={{ duration: 2 }} className={className}><PlayingCard value={values[j]} suit={suits[i]} faceUp={isFaceUp} isNotTopOfPack={isNotTopOfPack}/></motion.div>) 
+                let [className, isFaceUp, packPos] = gameState.findCardPosition(newCard)
+                cards.push(<motion.div onClick={()=>cardClicked(newCard)} layout transition={{ duration: 1.5 }} className={className}><PlayingCard value={values[j]} suit={suits[i]} faceUp={isFaceUp} packPos={packPos}/></motion.div>) 
             }
         }
         playerInfo = gameState.getMyPlayerInfo()
@@ -112,12 +148,15 @@ const Game = () => {
                 {gameState.move_status == 'start' && gameState.players.every(player => player.isReady) && 
                 <div>
                     <button onClick = {takeCardFromDeck}>Take Card From Deck</button>
-                    <button>Take Card From Pack</button>
+                    <button onClick = {takeCardFromPack}>Take Card From Pack</button>
                 </div>
                 }
-                {gameState.move_status == 'taken card from deck' && <div>
-                <button >Swap with card from my hand</button>
+                {gameState.move_status == 'taken card' && <div>
+                <button onClick = {selectSwap} >Swap with card from my hand</button>
                 <button onClick = {playCardToPack}>Play card to pack</button>
+                <button onClick = {() => playMultiple('2')} >Play double</button>
+                <button onClick = {() => playMultiple('3')} >Play triple</button>
+                <button onClick = {() => playMultiple('4')} >Play quad</button>
                 </div>}
             </div>}
         </div>

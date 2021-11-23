@@ -6,8 +6,10 @@ class InitGame{
         this.deck = this.createDeck()
         this.players = this.createPlayers(players)
         this.pack = []
+        this.move_status = 'start'
         this.turn = this.players[0].id
         this.is_slap = false
+        this.multiCards = []
         this.turn_count = 0
     }
     

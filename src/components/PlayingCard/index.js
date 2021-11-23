@@ -1,7 +1,7 @@
 import React from 'react';
 import './style.css'
 
-const PlayingCard = ({value, suit, faceUp, isNotTopOfPack}) => {
+const PlayingCard = ({value, suit, faceUp, packPos}) => {
 
     let symbols = {
         'diamond':'\u2666',
@@ -28,26 +28,14 @@ const PlayingCard = ({value, suit, faceUp, isNotTopOfPack}) => {
         cardStyle = {};
     }
 
-    // if (isNotTopOfPack){
-    //     cardStyle = {
-    //         ...cardStyle,
-    //         display: 'none'
-    //     }
-    //     cardColor = {
-    //         ...cardColor,
-    //         display: 'none'
-    //     }
-    // } 
     let wrapperStyle;
-    if (isNotTopOfPack){
+    if (packPos != -1){
         wrapperStyle = {
-            zIndex: 1,
+            zIndex: packPos,
             position: 'relative'
         }
     } else {
         wrapperStyle = {
-            zIndex:100000,
-            position: 'relative'
         }
     }
 
