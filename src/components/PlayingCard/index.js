@@ -28,31 +28,44 @@ const PlayingCard = ({value, suit, faceUp, isNotTopOfPack}) => {
         cardStyle = {};
     }
 
+    // if (isNotTopOfPack){
+    //     cardStyle = {
+    //         ...cardStyle,
+    //         display: 'none'
+    //     }
+    //     cardColor = {
+    //         ...cardColor,
+    //         display: 'none'
+    //     }
+    // } 
+    let wrapperStyle;
     if (isNotTopOfPack){
-        cardStyle = {
-            ...cardStyle,
-            display: 'none'
+        wrapperStyle = {
+            zIndex: 1,
+            position: 'relative'
         }
-        cardColor = {
-            ...cardColor,
-            display: 'none'
+    } else {
+        wrapperStyle = {
+            zIndex:100000,
+            position: 'relative'
         }
-    } 
+    }
 
     return (
-        <div className = 'card-container' style={cardColor}>
-            <div style={cardStyle}>
-                <div className='card-top' style={textStyle}>
-                    <span>{value}</span><span>{suitSymbol}</span>
-                </div>
-                <div className='card-suit'>
-                    <h3 className = 'h1-suit value-black' style={textStyle}>{suitSymbol}</h3>
-                </div>
-                <div className='card-bottom' style={textStyle}>
-                    <span>{suitSymbol}</span><span>{value}</span>
-                </div> 
+        <div style={wrapperStyle}>
+            <div className = 'card-container' style={cardColor}>
+                <div style={cardStyle}>
+                    <div className='card-top' style={textStyle}>
+                        <span>{value}</span><span>{suitSymbol}</span>
+                    </div>
+                    <div className='card-suit'>
+                        <h3 className = 'h1-suit value-black' style={textStyle}>{suitSymbol}</h3>
+                    </div>
+                    <div className='card-bottom' style={textStyle}>
+                        <span>{suitSymbol}</span><span>{value}</span>
+                    </div> 
+                </div>       
             </div>
-            
         </div>
     )
 }
