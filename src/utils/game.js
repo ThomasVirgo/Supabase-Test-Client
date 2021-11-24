@@ -166,8 +166,8 @@ class GameState{
             this.move_status = 'swapping cards, jack played'
         }
         if (cardVal === 'Q'){
-            // skip turn, i.e. turn_count += 2
             this.turn_count+=1 //will then increment it again when turn is finished
+            this.finishTurn()
         }
     }
 

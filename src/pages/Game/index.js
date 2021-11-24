@@ -148,7 +148,8 @@ const Game = () => {
                 let newState = new GameState(gameState, user)
                 newState.players[playerIdx].cards[cardIdx].faceUp = false;
                 newState.finishTurn()  
-                updateDatabaseState(newState)             
+                updateDatabaseState(newState)
+                setGameState(newState)             
             }, 5000)
         }
         if (gameState.move_status==='looking at own card'){
@@ -164,7 +165,8 @@ const Game = () => {
                 let newState = new GameState(gameState, user)
                 newState.players[playerIdx].cards[cardIdx].faceUp = false;
                 newState.finishTurn()  
-                updateDatabaseState(newState)             
+                updateDatabaseState(newState)
+                setGameState(newState)          
             }, 5000)
         }
     }
