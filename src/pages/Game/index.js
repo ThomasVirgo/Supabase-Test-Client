@@ -151,6 +151,22 @@ const Game = () => {
                 updateDatabaseState(newState)             
             }, 5000)
         }
+        if (gameState.move_status==='looking at own card'){
+            let newState = new GameState(gameState, user)
+            let playerIdx = newState.players.findIndex(p => p.id === user.id)
+            let cardIdx = newState.players[playerIdx].cards.findIndex(c => c.id === card.id)
+            if (cardIdx > -1){
+                newState.players[playerIdx].cards[cardIdx].faceUp=true;
+                newState.move_status = ''
+                setGameState(newState)
+            }
+            setTimeout(()=>{
+                let newState = new GameState(gameState, user)
+                newState.players[playerIdx].cards[cardIdx].faceUp = false;
+                newState.finishTurn()  
+                updateDatabaseState(newState)             
+            }, 5000)
+        }
     }
 
     let cards = []
