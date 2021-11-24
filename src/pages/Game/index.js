@@ -95,8 +95,10 @@ const Game = () => {
         let isFromDeck = deckOrPack === 'deck';
         let newState = new GameState(gameState, user)
         newState.playCardToPack(isFromDeck)
-        newState.move_status = 'start'
-        updateDatabaseState(newState)
+        if (newState.move_status === 'start'){
+            updateDatabaseState(newState)
+        }
+        setGameState(newState)
     }
 
     async function selectSwap(){
@@ -114,7 +116,7 @@ const Game = () => {
 
     function cardClicked(card){
         console.log(card);
-        if (gameState.move_status == 'selecting card'){
+        if (gameState.move_status === 'selecting card'){
             let newState = new GameState(gameState, user)
             newState.swapWithCardFromHand(card)
             updateDatabaseState(newState)
@@ -125,6 +127,29 @@ const Game = () => {
             if (newState.move_status === 'start'){
                 updateDatabaseState(newState)
             }
+        }
+        if (gameState.move_status === 'looking at someone elses card'){
+            let newState = new GameState(gameState, user)
+            let playerIdx, cardIdx;
+            newState.players.forEach((player, pIdx) => {
+                if (player.id === user.id){
+                    return //so they cant look at own card
+                }
+                let idx = player.cards.findIndex(c => c.id === card.id)
+                if (idx > -1){
+                    player.cards[idx].faceUp = true;
+                    newState.move_status = ''
+                    playerIdx = pIdx
+                    cardIdx = idx
+                    setGameState(newState)
+                }
+            })
+            setTimeout(()=>{
+                let newState = new GameState(gameState, user)
+                newState.players[playerIdx].cards[cardIdx].faceUp = false;
+                newState.finishTurn()  
+                updateDatabaseState(newState)             
+            }, 5000)
         }
     }
 

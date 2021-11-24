@@ -143,14 +143,34 @@ class GameState{
 
     playCardToPack(isFromDeck){
         this.pack.push(this.belowDeck)
-        let actionCards = '78910JQK'
-        if (actionCards.includes(this.belowDeck.value) && isFromDeck){
-            console.log('Allow user to play action action');
+        let actionCards = '78910JQ'
+        let cardVal = this.belowDeck.value
+        if (actionCards.includes(cardVal) && isFromDeck){
+            this.handleActionCard(cardVal)
+            return
         }
-        // need to check here if its an action card
-        this.belowDeck = null
         this.finishTurn()
     }
+
+    handleActionCard(cardVal){
+        if (cardVal === '7' || cardVal === '8'){
+            this.message = 'pick one of your cards to look at'
+            this.move_status = 'looking at own card'
+        }
+        if (cardVal === '9' || cardVal === '10'){
+            this.message = 'pick someone elses card to look at'
+            this.move_status = 'looking at someone elses card'
+        }
+        if (cardVal === 'J'){
+            this.message = 'pick one of your cards and one of someone elses to swap'
+            this.move_status = 'swapping cards, jack played'
+        }
+        if (cardVal === 'Q'){
+            // skip turn, i.e. turn_count += 2
+            this.turn_count+=1 //will then increment it again when turn is finished
+        }
+    }
+
 
     takeCardFromPack(){
         this.belowDeck = this.pack.pop()
