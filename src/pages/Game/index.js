@@ -78,20 +78,23 @@ const Game = () => {
     function takeCardFromDeck(){
         let newState = new GameState(gameState, user)
         newState.takeCardFromDeck()
-        newState.move_status = 'taken card'
+        newState.move_status = 'taken card deck'
         setGameState(newState)
     }
 
     function takeCardFromPack(){
         let newState = new GameState(gameState, user)
         newState.takeCardFromPack()
-        newState.move_status = 'taken card'
+        newState.move_status = 'taken card pack'
         setGameState(newState)
     }
     
-    async function playCardToPack(){
+    async function playCardToPack(move_status){
+        let split = move_status.split(' ')
+        let deckOrPack = split[split.length-1]
+        let isFromDeck = deckOrPack === 'deck';
         let newState = new GameState(gameState, user)
-        newState.playCardToPack()
+        newState.playCardToPack(isFromDeck)
         newState.move_status = 'start'
         updateDatabaseState(newState)
     }
@@ -171,10 +174,10 @@ const Game = () => {
                             <button onClick = {takeCardFromPack}>Take Card From Pack</button>
                         </div>
                         }
-                        {gameState?.move_status == 'taken card' && 
+                        {gameState?.move_status.includes('taken card') && 
                         <div>
                         <button onClick = {selectSwap} >Swap with card from my hand</button>
-                        <button onClick = {playCardToPack}>Play card to pack</button>
+                        <button onClick = {()=>playCardToPack(gameState?.move_status)}>Play card to pack</button>
                         <button onClick = {() => playMultiple('2')} >Play double</button>
                         <button onClick = {() => playMultiple('3')} >Play triple</button>
                         <button onClick = {() => playMultiple('4')} >Play quad</button>

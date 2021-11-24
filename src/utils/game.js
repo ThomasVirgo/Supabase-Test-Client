@@ -141,10 +141,10 @@ class GameState{
         this.belowDeck.faceUp = true
     }
 
-    playCardToPack(){
+    playCardToPack(isFromDeck){
         this.pack.push(this.belowDeck)
         let actionCards = '78910JQK'
-        if (actionCards.includes(this.belowDeck.value)){
+        if (actionCards.includes(this.belowDeck.value) && isFromDeck){
             console.log('Allow user to play action action');
         }
         // need to check here if its an action card
