@@ -11,6 +11,8 @@ class GameState{
         this.message = game_state.message
         this.gameStarted = game_state.gameStarted
         this.multiCards = game_state.multiCards
+        this.mySwapCard = game_state.mySwapCard 
+        this.opponentSwapCard = game_state.opponentSwapCard
         this.turn_count = game_state.turn_count
         this.belowDeck = game_state.belowDeck
     }
@@ -30,6 +32,8 @@ class GameState{
         let playerIdx = this.getTurnPlayerIdx()
         this.players[playerIdx].updateScores()
         this.belowDeck = null
+        this.mySwapCard = null
+        this.opponentSwapCard = null
         this.turn_count+=1
         this.message = `${this.getUsernameOfPlayersTurn()}! It's your turn.`
     }
@@ -167,6 +171,28 @@ class GameState{
         }
         if (cardVal === 'Q'){
             this.turn_count+=1 //will then increment it again when turn is finished
+            this.finishTurn()
+        }
+    }
+
+    selectSwapCard(card){
+        // check if it is one of my cards or opponents
+        this.players.forEach((p, pIdx) => {
+            p.cards.forEach((c, cIdx) => {
+                if (c.id === card.id && p.id === this.user.id){
+                    this.mySwapCard = [pIdx, cIdx, c]
+                }
+                if (c.id === card.id && p.id != this.user.id){
+                    this.opponentSwapCard = [pIdx, cIdx, c]
+                }
+            })
+        })
+
+        if (this.mySwapCard && this.opponentSwapCard){
+            let [myPlayerIdx, myCardIdx, myCard] = this.mySwapCard
+            let [oppPlayerIdx, oppCardIdx, oppCard] = this.opponentSwapCard
+            this.players[myPlayerIdx].cards[myCardIdx] = oppCard
+            this.players[oppPlayerIdx].cards[oppCardIdx] = myCard
             this.finishTurn()
         }
     }

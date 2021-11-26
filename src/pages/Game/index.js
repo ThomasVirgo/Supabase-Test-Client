@@ -169,6 +169,12 @@ const Game = () => {
                 setGameState(newState)          
             }, 5000)
         }
+        if (gameState.move_status === 'swapping cards, jack played'){
+            let newState = new GameState(gameState, user);
+            newState.selectSwapCard(card)
+            updateDatabaseState(newState)
+            setGameState(newState)
+        }
     }
 
     let cards = []

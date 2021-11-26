@@ -12,6 +12,8 @@ class InitGame{
         this.message = 'Waiting for players to join'
         this.multiCards = []
         this.gameStarted = false
+        this.mySwapCard = null // use this when a J is played
+        this.opponentSwapCard = null // use this when a J is played
         this.turn_count = 0
     }
     
