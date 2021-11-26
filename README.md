@@ -7,7 +7,11 @@
 
 
 ### Priority
-- implement action cards, i.e. 7,8,9,10,J,Q
+- fix chat bug... messages not showing and rendering at top
+- add message on playing double, triple, quad. Handle if they get it wrong
+- create gandalf button and rounds
+- implement slapping cards
+- create leave game button
 - dont let extra players join past 4 players or if game has started
 
 ## Future features

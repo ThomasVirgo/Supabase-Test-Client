@@ -26,7 +26,7 @@ class Player{
     }
 
     updateScores(){
-        this.score_history.push(this.inHandScore)
+        this.score_history.push(this.calcCurrentScore())
     }
 }
 

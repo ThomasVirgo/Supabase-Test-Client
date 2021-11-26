@@ -51,7 +51,10 @@ class GameState{
     }
 
     dealCards(){
-        this.players.forEach(player => player.cards = this.deck.splice(0, 4))
+        this.players.forEach(player => {
+            player.cards = this.deck.splice(0, 4)
+            player.score_history.push(player.calcCurrentScore())
+        })
     }
 
     getMyPlayerInfo(){
