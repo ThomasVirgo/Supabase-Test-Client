@@ -88,6 +88,13 @@ const Game = () => {
         newState.move_status = 'taken card pack'
         setGameState(newState)
     }
+
+    function callGandalf(){
+        let newState = new GameState(gameState, user)
+        newState.callGandalf()
+        setGameState(newState)
+        updateDatabaseState(newState)
+    }
     
     async function playCardToPack(move_status){
         let split = move_status.split(' ')
@@ -104,12 +111,14 @@ const Game = () => {
     async function selectSwap(){
         let newState = new GameState(gameState, user)
         newState.move_status = 'selecting card'
+        newState.message = 'Pick a card from your hand'
         setGameState(newState)
     }
 
     function playMultiple(howMany){
         let newState = new GameState(gameState, user)
         newState.move_status = `selecting multiple ${howMany}`
+        newState.message = 'Select the cards you want to play'
         console.log('clicked play multiple', newState);
         setGameState(newState)
     }
@@ -201,17 +210,21 @@ const Game = () => {
         <PlayerPopUp player={player}></PlayerPopUp>
         </div>)
 
-
     return (
         <>
+        <div className='game_global_message_container'>
+            <h5>{gameState?.globalMessage}</h5>
+        </div>
+        {gameState?.roundOver ? 
+            <div className='round_over_container'>
+            </div> :
         <motion.div className='game_container'>
-            
             {cards}
-            {playerPopUps}
-            
+            {playerPopUps}    
         </motion.div>
+        }
         <div className='game_buttons_container'>
-            <div>
+            {!gameState.roundOver && <div>
                 {!gameState?.gameStarted && gameState?.checkMyTurn() && <button onClick={dealCards}>Deal Cards</button>}
                 {gameState?.gameStarted && !isReady && <button onClick={readyUp}>Ready</button>}
 
@@ -221,6 +234,7 @@ const Game = () => {
                         <div>
                             <button onClick = {takeCardFromDeck}>Take Card From Deck</button>
                             <button onClick = {takeCardFromPack}>Take Card From Pack</button>
+                            {gameState.players.every(p => !p.calledGandalf) && <button onClick = {callGandalf}>Gandalf</button>}
                         </div>
                         }
                         {gameState?.move_status.includes('taken card') && 
@@ -234,7 +248,7 @@ const Game = () => {
                         }
                     </div>
                 }
-            </div>
+            </div>}
             <div className='info_container'>
                 <p>{gameState?.message}</p>
                 <p>Your game code is: <strong>{roomName}</strong></p>

@@ -2,7 +2,7 @@ import Player from "./player"
 import Card from "./card"
 
 class InitGame{
-    constructor(players){
+    constructor(players, round = 1){
         this.deck = this.createDeck()
         this.players = this.createPlayers(players)
         this.pack = []
@@ -15,6 +15,9 @@ class InitGame{
         this.mySwapCard = null // use this when a J is played
         this.opponentSwapCard = null // use this when a J is played
         this.turn_count = 0
+        this.globalMessage = 'Waiting for players to join, host should deal cards when ready'
+        this.round = round
+        this.roundOver = false
     }
     
     createDeck(){
@@ -35,7 +38,7 @@ class InitGame{
 
     createPlayers(players){
         // to begin with give players no cards, then once all players have joined deal the cards
-        return players.map(player => new Player(player.id, player.username, [], [], 0, false))
+        return players.map(player => new Player(player.id, player.username, [], [], 0, false, false))
     }
 
     selectCards(){

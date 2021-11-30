@@ -2,7 +2,7 @@
     background-color: white;
     border-radius: 20px;
     width: 95vw;
-    height: 80vh;
+    height: 73vh;
     margin: auto;
     margin-top: 10px;
     padding: 10px;
@@ -31,8 +31,30 @@
     justify-content: space-between;
 }
 
+.game_global_message_container{
+    background-color: white;
+    border-radius: 20px;
+    width: 95vw;
+    height: 5vh;
+    margin: auto;
+    margin-top: 10px;
+    padding: 10px;
+}
+
 .info_container p{
     color: black;
+}
+
+.round_over_container{
+    background-color: white;
+    border-radius: 20px;
+    width: 95vw;
+    height: 73vh;
+    margin: auto;
+    margin-top: 10px;
+    padding: 10px;
+    display: grid;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .card1{

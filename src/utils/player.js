@@ -1,5 +1,5 @@
 class Player{
-    constructor(id, username, cards, score_history, score, isReady){
+    constructor(id, username, cards, score_history, score, isReady, calledGandalf){
         this.id = id
         this.username = username
         this.cards = cards
@@ -7,6 +7,7 @@ class Player{
         this.score = score
         this.inHandScore = this.calcCurrentScore()
         this.isReady = isReady
+        this.calledGandalf = calledGandalf
     }
 
     calcCurrentScore(){

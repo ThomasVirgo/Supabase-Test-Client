@@ -2,12 +2,13 @@ import Player from "./player"
 
 class GameState{
     constructor(game_state, user){
-        this.players = game_state.players.map(player => new Player(player.id, player.username, player.cards, player.score_history, player.score, player.isReady))
+        this.players = game_state.players.map(player => new Player(player.id, player.username, player.cards, player.score_history, player.score, player.isReady, player.calledGandalf))
         this.deck = game_state.deck
         this.pack = game_state.pack
         this.is_slap = game_state.is_slap
         this.move_status = game_state.move_status
         this.user = user
+        this.globalMessage = game_state.globalMessage
         this.message = game_state.message
         this.gameStarted = game_state.gameStarted
         this.multiCards = game_state.multiCards
@@ -15,6 +16,8 @@ class GameState{
         this.opponentSwapCard = game_state.opponentSwapCard
         this.turn_count = game_state.turn_count
         this.belowDeck = game_state.belowDeck
+        this.round = game_state.round
+        this.roundOver = game_state.roundOver
     }
 
     checkMyTurn(){
@@ -35,6 +38,14 @@ class GameState{
         this.mySwapCard = null
         this.opponentSwapCard = null
         this.turn_count+=1
+        // check if the next player has called gandalf and if so end the round
+        let nextPlayer = this.players[this.getTurnPlayerIdx()]
+        if (nextPlayer.calledGandalf){
+            // call a function called endRound which performs actions to end round...
+            this.roundOver = true
+            this.message = 'Round Over!'
+            return
+        }
         this.message = `${this.getUsernameOfPlayersTurn()}! It's your turn.`
     }
 
@@ -81,6 +92,12 @@ class GameState{
             order.push(val)
         }
         return order
+    }
+
+    callGandalf(){
+        let myPlayer = this.getMyPlayerInfo()
+        myPlayer.calledGandalf = true
+        this.finishTurn()
     }
 
     findProfileClass(player){
@@ -231,11 +248,16 @@ class GameState{
 
         if (this.multiCards.length == targetNum){
             // check they're all of same value, 
-            console.log('inside multi');
             let val = this.multiCards[0].value
             let allSame = this.multiCards.every(c => c.value === val)
+            if (!allSame){
+                // add 10 points to the players score and return the belowdeck card to the pack
+                let myPlayer = this.getMyPlayerInfo()
+                myPlayer.score += 10
+                this.pack.push(this.belowDeck)
+                this.finishTurn()
+            }
             if (allSame){
-                console.log('inside allsame');
                 let myNewCards = [...this.getMyPlayerInfo().cards]
                 this.multiCards.forEach(c => {
                     let cIdx = myNewCards.findIndex(i => i.id === c.id)

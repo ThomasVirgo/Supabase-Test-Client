@@ -7,8 +7,7 @@
 
 
 ### Priority
-- fix chat bug... messages not showing and rendering at top
-- add message on playing double, triple, quad. Handle if they get it wrong
+- move message to top of page
 - create gandalf button and rounds
 - implement slapping cards
 - create leave game button
