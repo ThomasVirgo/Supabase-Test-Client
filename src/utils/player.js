@@ -29,6 +29,11 @@ class Player{
     updateScores(){
         this.score_history.push(this.calcCurrentScore())
     }
+
+    addScore(){
+        // need to check if they called gandalf correctly or not
+        this.score += this.calcCurrentScore()
+    }
 }
 
 export default Player

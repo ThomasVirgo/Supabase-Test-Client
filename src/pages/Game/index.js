@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { SupaBaseContext } from "../../context/supabase_client";
 import GameState from "../../utils/game";
 import Card from "../../utils/card";
-import { PlayingCard, PlayerPopUp } from "../../components";
+import { PlayingCard, PlayerPopUp, RoundChart } from "../../components";
 import './style.css'
 
 const Game = () => {
@@ -217,6 +217,7 @@ const Game = () => {
         </div>
         {gameState?.roundOver ? 
             <div className='round_over_container'>
+                <RoundChart gameState={gameState}/>
             </div> :
         <motion.div className='game_container'>
             {cards}
@@ -224,7 +225,7 @@ const Game = () => {
         </motion.div>
         }
         <div className='game_buttons_container'>
-            {!gameState.roundOver && <div>
+            {!gameState?.roundOver && <div>
                 {!gameState?.gameStarted && gameState?.checkMyTurn() && <button onClick={dealCards}>Deal Cards</button>}
                 {gameState?.gameStarted && !isReady && <button onClick={readyUp}>Ready</button>}
 

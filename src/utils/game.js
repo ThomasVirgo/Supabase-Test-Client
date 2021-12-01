@@ -41,12 +41,17 @@ class GameState{
         // check if the next player has called gandalf and if so end the round
         let nextPlayer = this.players[this.getTurnPlayerIdx()]
         if (nextPlayer.calledGandalf){
-            // call a function called endRound which performs actions to end round...
-            this.roundOver = true
-            this.message = 'Round Over!'
+            this.endRound()
             return
         }
         this.message = `${this.getUsernameOfPlayersTurn()}! It's your turn.`
+    }
+
+    endRound(){
+        this.roundOver = true;
+        this.message = 'Round over!'
+        this.equaliseScores()
+        this.players.forEach(p => p.addScore())
     }
 
     getUsernameOfPlayersTurn(){
@@ -98,6 +103,26 @@ class GameState{
         let myPlayer = this.getMyPlayerInfo()
         myPlayer.calledGandalf = true
         this.finishTurn()
+    }
+
+    equaliseScores(){
+        console.log('equalising scores...');
+        let maxLength = 0
+        this.players.forEach(p => {
+            if (p.score_history.length > maxLength){
+                maxLength = p.score_history.length
+            }
+        })
+        this.players.forEach(p=>{
+            let hisLength = p.score_history.length
+            if (hisLength < maxLength){
+                let padding = maxLength - hisLength
+                let pad = p.score_history[hisLength-1]
+                for (let i=0; i<padding; i++){
+                    p.score_history.push(pad)
+                }
+            }
+        })
     }
 
     findProfileClass(player){
