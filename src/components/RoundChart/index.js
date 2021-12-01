@@ -25,6 +25,7 @@ ChartJS.register(
 const RoundChart = ({gameState}) => {
     const options = {
       responsive: true,
+      maintainAspectRatio: false,
       plugins: {
         legend: {
           position: 'top',

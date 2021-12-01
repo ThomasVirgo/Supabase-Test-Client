@@ -217,7 +217,9 @@ const Game = () => {
         </div>
         {gameState?.roundOver ? 
             <div className='round_over_container'>
-                <RoundChart gameState={gameState}/>
+                <div className='game_chart_container'>
+                    <RoundChart gameState={gameState}/>
+                </div>
             </div> :
         <motion.div className='game_container'>
             {cards}

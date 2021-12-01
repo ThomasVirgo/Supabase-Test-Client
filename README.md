@@ -7,8 +7,8 @@
 
 
 ### Priority
-- move message to top of page
-- create gandalf button and rounds
+- update messages on each move
+- allow new round to be started...
 - implement slapping cards
 - create leave game button
 - dont let extra players join past 4 players or if game has started
