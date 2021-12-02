@@ -18,6 +18,7 @@ class InitGame{
         this.globalMessage = 'Waiting for players to join, host should deal cards when ready'
         this.round = round
         this.roundOver = false
+        this.showStats = false
     }
     
     createDeck(){

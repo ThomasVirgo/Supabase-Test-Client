@@ -8,7 +8,7 @@
 
 ### Priority
 - update messages on each move
-- allow new round to be started...
+- if gandalf called correctly, give player 0 
 - implement slapping cards
 - create leave game button
 - dont let extra players join past 4 players or if game has started

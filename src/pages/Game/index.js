@@ -123,6 +123,19 @@ const Game = () => {
         setGameState(newState)
     }
 
+    function startNewRound(){
+        let newState = new GameState(gameState, user)
+        newState.startNewRound()
+        setGameState(newState)
+        updateDatabaseState(newState)
+    }
+
+    function showStats(){
+        let newState = new GameState(gameState, user)
+        newState.showStats = true;
+        setGameState(newState)
+    }
+
     function cardClicked(card){
         console.log(card);
         if (gameState.move_status === 'selecting card'){
@@ -215,7 +228,7 @@ const Game = () => {
         <div className='game_global_message_container'>
             <h5>{gameState?.globalMessage}</h5>
         </div>
-        {gameState?.roundOver ? 
+        {gameState?.showStats ? 
             <div className='round_over_container'>
                 <div className='game_chart_container'>
                     <RoundChart gameState={gameState}/>
@@ -223,6 +236,7 @@ const Game = () => {
                         <OverallLeaderboard gameState={gameState}/>
                         <RoundLeaderboard gameState={gameState}/>
                     </div>
+                    {gameState.checkMyTurn() && <button onClick={startNewRound}>Start New Round</button>}
                 </div>
             </div> :
         <motion.div className='game_container'>
@@ -256,6 +270,9 @@ const Game = () => {
                     </div>
                 }
             </div>}
+            {gameState?.roundOver && <div>
+                <button onClick = {showStats}>Show stats</button>
+                </div>}
             <div className='info_container'>
                 <p>{gameState?.message}</p>
                 <p>Your game code is: <strong>{roomName}</strong></p>

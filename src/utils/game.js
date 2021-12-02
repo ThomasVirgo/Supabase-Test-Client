@@ -1,4 +1,5 @@
 import Player from "./player"
+import Card from "./card"
 
 class GameState{
     constructor(game_state, user){
@@ -18,6 +19,7 @@ class GameState{
         this.belowDeck = game_state.belowDeck
         this.round = game_state.round
         this.roundOver = game_state.roundOver
+        this.showStats = game_state.showStats
     }
 
     checkMyTurn(){
@@ -41,17 +43,55 @@ class GameState{
         // check if the next player has called gandalf and if so end the round
         let nextPlayer = this.players[this.getTurnPlayerIdx()]
         if (nextPlayer.calledGandalf){
-            this.endRound()
+            setTimeout(this.endRound(), 300)
+            // this.endRound()
             return
         }
         this.message = `${this.getUsernameOfPlayersTurn()}! It's your turn.`
     }
 
     endRound(){
-        this.roundOver = true;
         this.message = 'Round over!'
         this.equaliseScores()
         this.players.forEach(p => p.addScore())
+        this.players.forEach(p => {
+            p.cards.forEach(c => c.faceUp = true)
+        })
+        this.roundOver = true;
+    }
+
+    startNewRound(){
+        this.players = this.players.map(p => new Player(p.id, p.username, [], [], p.score, false, false))
+        this.deck = this.createDeck()
+        this.pack = []
+        this.is_slap = false
+        this.move_status = "start"
+        this.globalMessage = ''
+        this.message = 'Waiting for all players to be ready, remember the cards!'
+        this.multiCards = []
+        this.mySwapCard = null
+        this.opponentSwapCard = null
+        this.belowDeck = null
+        this.round = this.round + 1
+        this.roundOver = false
+        this.showStats = false
+        this.dealCards()
+    }
+
+    createDeck(){
+        let suits = ["spade", "diamond", "club", "heart"];
+        let values = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
+        let cards = []
+        suits.forEach(suit => values.forEach(value => cards.push(new Card(value, suit))))
+        this.shuffleArray(cards)
+        return cards
+    }
+
+    shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
     }
 
     getUsernameOfPlayersTurn(){
