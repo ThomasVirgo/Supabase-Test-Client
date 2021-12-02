@@ -30,8 +30,17 @@ class Player{
         this.score_history.push(this.calcCurrentScore())
     }
 
-    addScore(){
+    addScore(lowestScore){
         // need to check if they called gandalf correctly or not
+        let score = this.calcCurrentScore()
+        if (this.calledGandalf && score == lowestScore){
+            this.score += 0
+            return
+        } 
+        if (this.calledGandalf && score > lowestScore){
+            this.score += score + 10
+            return
+        }
         this.score += this.calcCurrentScore()
     }
 }

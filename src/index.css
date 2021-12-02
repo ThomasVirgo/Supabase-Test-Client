@@ -3,8 +3,11 @@
 :root {
     /* --main-color: #08421c;
     --main-color-light: #1c8840; */
-    --main-color: #400842;
-    --main-color-light: #9742a8;
+    /* --main-color: #400842;
+    --main-color-light: #9742a8; */
+    
+    --main-color: #21a36f;;
+    --main-color-light: #2EE59D;;
     --text-color: #ffffff;
     --background-color: rgba(0, 0, 0, 0.7);
     --background-color-dark: rgba(0, 0, 0, 0.9); 

@@ -1,6 +1,15 @@
 import Player from "./player"
 import Card from "./card"
 
+const globalMessages = {
+    preGame: 'Waiting for all players to be ready, remember the cards!',
+
+}
+
+const instructionMessages = {
+
+}
+
 class GameState{
     constructor(game_state, user){
         this.players = game_state.players.map(player => new Player(player.id, player.username, player.cards, player.score_history, player.score, player.isReady, player.calledGandalf))
@@ -53,7 +62,14 @@ class GameState{
     endRound(){
         this.message = 'Round over!'
         this.equaliseScores()
-        this.players.forEach(p => p.addScore())
+        let lowestScore = Infinity
+        this.players.forEach(p => {
+            let hisLength = p.score_history.length
+            if (p.score_history[hisLength-1] < lowestScore){
+                lowestScore = p.score_history[hisLength-1]
+            }
+        })
+        this.players.forEach(p => p.addScore(lowestScore))
         this.players.forEach(p => {
             p.cards.forEach(c => c.faceUp = true)
         })
