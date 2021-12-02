@@ -57,6 +57,11 @@
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
+.leaderboards_container{
+    display: flex;
+    justify-content: space-around;
+}
+
 .game_chart_container{
     height: 40vh;
     width: 95vw;

@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { SupaBaseContext } from "../../context/supabase_client";
 import GameState from "../../utils/game";
 import Card from "../../utils/card";
-import { PlayingCard, PlayerPopUp, RoundChart } from "../../components";
+import { PlayingCard, PlayerPopUp, RoundChart, OverallLeaderboard, RoundLeaderboard } from "../../components";
 import './style.css'
 
 const Game = () => {
@@ -219,6 +219,10 @@ const Game = () => {
             <div className='round_over_container'>
                 <div className='game_chart_container'>
                     <RoundChart gameState={gameState}/>
+                    <div className='leaderboards_container'>
+                        <OverallLeaderboard gameState={gameState}/>
+                        <RoundLeaderboard gameState={gameState}/>
+                    </div>
                 </div>
             </div> :
         <motion.div className='game_container'>

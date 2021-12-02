@@ -1,0 +1,24 @@
+.overall_board_container{
+    display: flex;
+    justify-content: space-around;
+    border-radius: 3px;
+    border: 2px solid purple;
+    margin-bottom: 5px;
+}
+
+.overall_board_container:hover{
+    background-color: lightgray;
+}
+
+.overall_leaderboard_container{
+    margin-top: 5px;
+    width: 40%;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    padding: 5px;
+}
+
+.overall_leaderboard_title{
+    color: black;
+    text-align: center;
+}
