@@ -1,9 +1,9 @@
 import React from 'react';
 import {ReactComponent as ReactLogo} from '../../images/full_logo.svg';
 
-const GandalfLogo = () => {
+const GandalfLogo = ({style}) => {
   return (
-    <div style = {{marginTop: '100px'}}>
+    <div style = {style}>
       <ReactLogo />
     </div>
   );

@@ -38,7 +38,7 @@ const Login = () => {
     return (
         <div className='login_main_container'>
             <div>
-                <GandalfLogo/>
+                <GandalfLogo style={{marginTop: '100px'}}/>
             </div>
             <div className='center_container'>
                 <div className='shadow_container_center'>

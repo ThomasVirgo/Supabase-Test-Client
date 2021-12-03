@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { SupaBaseContext } from "../../context/supabase_client";
 import { Link } from "react-router-dom";
-import { StringInput, SubmitButton } from "../../components";
+import { StringInput, SubmitButton, GandalfLogo, StyledButton } from "../../components";
 
 const Register = () => {
     const supabase = useContext(SupaBaseContext)
@@ -54,18 +54,23 @@ const Register = () => {
 
 
     return (
-        <div className='center_container'>
-            <div className='shadow_container_center'>
-                {!message && <form className='form_container' onSubmit={handleSubmit}>
-                    <StringInput type="email" name='email' placeholder='Email' value={input['email']} onChange={handleChange}/>
-                    <StringInput type="text" name='username' placeholder='Username' value={input['username']} onChange={handleChange}/>
-                    <StringInput type="password" name='password' placeholder='Password' value={input['password']} onChange={handleChange}/>
-                    <StringInput type="password" name='password2' placeholder='Confirm Password' value={input['password2']} onChange={handleChange}/>
-                    {!isLoading ? <SubmitButton value='Register' /> : <button>loading...</button>}
-                </form>}
-                <p>Already have an account? <Link to='/login'>Login Here</Link></p>
-                {inputError && <p>{inputError}</p>}
-                {message && <p>{message}</p>}
+        <div className='login_main_container'>
+            <div>
+                <GandalfLogo style={{marginTop: '100px'}}/>
+            </div>
+            <div className='center_container'>
+                <div className='shadow_container_center'>
+                    {!message && <form className='form_container' onSubmit={handleSubmit}>
+                        <StringInput type="email" name='email' placeholder='Email' value={input['email']} onChange={handleChange}/>
+                        <StringInput type="text" name='username' placeholder='Username' value={input['username']} onChange={handleChange}/>
+                        <StringInput type="password" name='password' placeholder='Password' value={input['password']} onChange={handleChange}/>
+                        <StringInput type="password" name='password2' placeholder='Confirm Password' value={input['password2']} onChange={handleChange}/>
+                        {!isLoading ? <StyledButton onClick={handleSubmit} text='register' style = {{marginTop: '10px'}}/> : <StyledButton text='Loading...'  style = {{marginTop: '10px'}} />}
+                    </form>}
+                    <p>Already have an account? <Link to='/login'>Login Here</Link></p>
+                    {inputError && <p>{inputError}</p>}
+                    {message && <p>{message}</p>}
+                </div>
             </div>
         </div>
     )

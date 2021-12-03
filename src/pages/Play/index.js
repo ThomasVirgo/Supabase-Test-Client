@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import { SupaBaseContext } from "../../context/supabase_client";
+import { StyledButton, StringInput } from "../../components";
 import InitGame from "../../utils/initGame";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
@@ -81,15 +82,18 @@ const Play = () => {
 
     return (
         <div>
-            <form onSubmit={handleCreate}>
-                <p>Create a game, generate a game code by clicking button below</p>
-                {/* <input type='text' name='create' onChange={handleChange} value={inputs.create} placeholder='room name'></input> */}
-                <input type='submit' value='Create Game'></input>
+            <form onSubmit={handleCreate} style={{textAlign: 'center'}}>
+                <p>Generate a game code by clicking the button below</p>
+                <StyledButton text='Create Game' onClick={handleCreate} />
             </form>
-            <form onSubmit={handleJoin}>
-                <p>Join a game, enter the room name below</p>
-                <input type='text' name='join' onChange={handleChange} value={inputs.join} placeholder='room name'></input>
-                <input type='submit' value='Join Game'></input>
+            <form onSubmit={handleJoin} style={{textAlign: 'center', marginTop: '30px'}}>
+                <p>Join a game, enter the game code below</p>
+                <div>
+                    <StringInput type='text' name='join' onChange={handleChange} value={inputs.join} placeholder='game code' />
+                </div>
+                <div>
+                    <StyledButton text='Join Game' onClick={handleJoin} style={{marginTop: '10px'}} />
+                </div>
             </form>
         </div>
     )

@@ -1,6 +1,6 @@
 .chat_main_container{
     display: flex;
-    height: calc(100vh - 150px); 
+    height: calc(100vh - 180px); 
     /* note 100px is the nav bar height */
 }
 
