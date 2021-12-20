@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import { useNavigate } from 'react-router-dom';
 import { motion } from "framer-motion"
 import { useSelector } from "react-redux";
 import { SupaBaseContext } from "../../context/supabase_client";
@@ -12,11 +13,7 @@ const Game = () => {
     const roomName = useSelector(state => state.room_name)
     const supabase = useContext(SupaBaseContext)
     const user = supabase.auth.user()
-
-//     const mySubscription = supabase
-//   .from('countries:id=eq.200')
-//   .on('UPDATE', handleRecordUpdated)
-//   .subscribe()
+    const navigate = useNavigate();
 
     useEffect(()=>{
         async function fetchGameAndSubscribe(){
@@ -80,6 +77,34 @@ const Game = () => {
                     .from('games')
                     .update({ game_state: newState })
                     .match({ room_name: roomName })
+    }
+
+    async function updateElo(points){
+        let { data, error } = await supabase.from('elo').select('elo').match({user_id:user.id})
+        
+        if (data.length){
+            let new_points = data[0].elo + points
+            let response = await supabase.from('elo').update({ elo: new_points }).match({ user_id: user.id })
+        } else {
+            let response = await supabase.from('elo')
+            .insert([
+              { user_id: user.id, username: user.user_metadata.username, elo: points }
+            ])
+        }
+    }
+
+    function leaveGame(){
+        if (gameState.gameOver){
+            const newState = new GameState(gameState, user)
+            const points = newState.calcElo()
+            updateElo(points)
+        }
+        if (!gameState.gameOver){
+            updateElo(-10)
+        }
+
+        navigate('/')
+
     }
 
     function takeCardFromDeck(){
@@ -244,7 +269,7 @@ const Game = () => {
                         <RoundLeaderboard gameState={gameState}/>
                     </div>
                     {gameState.checkMyTurn() && !gameState.gameOver && <button onClick={startNewRound}>Start New Round</button>}
-                    {gameState.gameOver && <button>Collect Points</button>}
+                    {gameState.gameOver && <button onClick={leaveGame}>Leave Game and Collect  Elo Points</button>}
                 </div>
             </div> :
         <motion.div className='game_container'>
