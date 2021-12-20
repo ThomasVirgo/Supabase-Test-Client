@@ -9,6 +9,7 @@
 ### Priority
 - update messages on each move
 - create end game after three rounds
+- show elo increasing on end of game
 - implement slapping cards
 - create leave game button
 - dont let extra players join past 4 players or if game has started
@@ -19,6 +20,7 @@
 - have elo system and rankings
 - add game rules page
 - create matchmaking system so can play against anyone
+- make mobile friendly
 
 
 ## Elo System

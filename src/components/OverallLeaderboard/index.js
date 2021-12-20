@@ -11,10 +11,16 @@ const OverallLeaderboard = ({gameState}) => {
             </div>
         )
     return (
+        
         <div className='overall_leaderboard_container'>
-            <p className='overall_leaderboard_title'>Overall Leaderboard</p>
+            {gameState.gameOver ? <p className='overall_leaderboard_title'>
+                Game over, <strong>{players[0].username}</strong> wins!!
+                </p> :
+                <p className='overall_leaderboard_title'>Overall Leaderboard</p>
+            }
             {divs}
         </div>
+        
     )
 }
 

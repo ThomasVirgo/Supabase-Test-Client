@@ -4,6 +4,7 @@ import Card from "./card"
 const globalMessages = {
     preGame: 'Waiting for all players to be ready, remember the cards!',
 
+
 }
 
 const instructionMessages = {
@@ -29,6 +30,7 @@ class GameState{
         this.round = game_state.round
         this.roundOver = game_state.roundOver
         this.showStats = game_state.showStats
+        this.gameOver = game_state.gameOver
     }
 
     checkMyTurn(){
@@ -57,6 +59,7 @@ class GameState{
             return
         }
         this.message = `${this.getUsernameOfPlayersTurn()}! It's your turn.`
+        this.globalMessage = `${this.getUsernameOfPlayersTurn()}! It's your turn.`
     }
 
     endRound(){
@@ -74,6 +77,9 @@ class GameState{
             p.cards.forEach(c => c.faceUp = true)
         })
         this.roundOver = true;
+        if (this.round == 3){
+            this.gameOver = true
+        }
     }
 
     startNewRound(){
@@ -127,6 +133,7 @@ class GameState{
             player.cards = this.deck.splice(0, 4)
             player.score_history.push(player.calcCurrentScore())
         })
+        console.log('dealt cards');
     }
 
     getMyPlayerInfo(){

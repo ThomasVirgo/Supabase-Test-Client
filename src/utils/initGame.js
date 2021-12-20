@@ -19,6 +19,7 @@ class InitGame{
         this.round = round
         this.roundOver = false
         this.showStats = false
+        this.gameOver = false
     }
     
     createDeck(){

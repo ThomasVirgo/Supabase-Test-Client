@@ -13,6 +13,11 @@ const Game = () => {
     const supabase = useContext(SupaBaseContext)
     const user = supabase.auth.user()
 
+//     const mySubscription = supabase
+//   .from('countries:id=eq.200')
+//   .on('UPDATE', handleRecordUpdated)
+//   .subscribe()
+
     useEffect(()=>{
         async function fetchGameAndSubscribe(){
             const { data, error } = await supabase
@@ -24,8 +29,10 @@ const Game = () => {
             let game_state = data[0]?.game_state
             let new_game_state = new GameState(game_state, user)
             setGameState(new_game_state)
+            const sub_str = 'games:room_name=eq.'+roomName
+            console.log(sub_str);
             const mySubscription = supabase
-                .from(`games:room_name=eq.${roomName}`)
+                .from(sub_str)
                 .on('UPDATE', payload => {
                     new_game_state = new GameState(payload.new.game_state, user)
                     console.log(new_game_state);
@@ -212,14 +219,14 @@ const Game = () => {
                 if (gameState.message === 'Waiting for all players to be ready, remember the cards!' && (className==='card1' || className==='card2')){
                     isFaceUp = true;
                 }
-                cards.push(<motion.div onClick={()=>cardClicked(newCard)} layout transition={{ duration: 1.5 }} className={className}><PlayingCard value={values[j]} suit={suits[i]} faceUp={isFaceUp} packPos={packPos}/></motion.div>) 
+                cards.push(<motion.div key={`${i}${j}`} onClick={()=>cardClicked(newCard)} layout transition={{ duration: 1.5 }} className={className}><PlayingCard value={values[j]} suit={suits[i]} faceUp={isFaceUp} packPos={packPos}/></motion.div>) 
             }
         }
         playerInfo = gameState.getMyPlayerInfo()
         isReady = playerInfo.isReady
     }
 
-    let playerPopUps = gameState?.players.map(player => <div className={gameState.findProfileClass(player)}>
+    let playerPopUps = gameState?.players.map((player, idx) => <div key={idx} className={gameState.findProfileClass(player)}>
         <PlayerPopUp player={player}></PlayerPopUp>
         </div>)
 
@@ -236,7 +243,8 @@ const Game = () => {
                         <OverallLeaderboard gameState={gameState}/>
                         <RoundLeaderboard gameState={gameState}/>
                     </div>
-                    {gameState.checkMyTurn() && <button onClick={startNewRound}>Start New Round</button>}
+                    {gameState.checkMyTurn() && !gameState.gameOver && <button onClick={startNewRound}>Start New Round</button>}
+                    {gameState.gameOver && <button>Collect Points</button>}
                 </div>
             </div> :
         <motion.div className='game_container'>
