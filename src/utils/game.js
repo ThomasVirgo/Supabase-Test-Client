@@ -117,7 +117,10 @@ class GameState{
     }
 
     calcElo(){
-        return 5
+        let players = this.players.sort((a,b) => a.score - b.score)
+        let idx = players.findIndex( p => p.id === this.user.id)
+        let elo = (players.length - idx)*10
+        return elo
     }
 
     getUsernameOfPlayersTurn(){

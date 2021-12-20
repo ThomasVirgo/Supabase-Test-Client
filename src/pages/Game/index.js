@@ -259,6 +259,7 @@ const Game = () => {
         <>
         <div className='game_global_message_container'>
             <h5>{gameState?.globalMessage}</h5>
+            <button onClick={leaveGame}>Leave Game</button>
         </div>
         {gameState?.showStats ? 
             <div className='round_over_container'>
