@@ -1,6 +1,6 @@
 import { SupaBaseContext, supabase } from './context/supabase_client'
 import { Route, Routes, BrowserRouter } from 'react-router-dom'
-import { Login, Register, Dashboard, Account, NotFound, ForgotPassword, NewPassword, Chat, Game, Play } from './pages'
+import { Login, Register, Dashboard, Account, NotFound, ForgotPassword, NewPassword, Chat, Game, Play, Rankings } from './pages'
 
 
 function App() {
@@ -14,6 +14,7 @@ function App() {
             <Route path="/reset_password" element={<ForgotPassword />} />
             <Route path="/new_password/:token" element={<NewPassword />} />
             <Route path="/" element={<Dashboard />}>
+              <Route path="" element={<Rankings />} />
               <Route path="account" element={<Account />} />
               <Route path="chat/*" element={<Chat />} />
               <Route path="play/" element={<Play />} />

@@ -1,0 +1,19 @@
+.rank_card{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    margin: 10px;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: black;
+    color: white;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.rank_card:hover{
+    box-shadow: var(--main-color-light) 0px 5px 15px;
+}
+
+.rankings_header{
+    text-align: center;
+}

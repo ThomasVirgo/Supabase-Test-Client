@@ -170,6 +170,12 @@ const Game = () => {
 
     function cardClicked(card){
         console.log(card);
+        // if (gameState.move_status === 'start'){
+        //     let newState = new GameState(gameState, user)
+        //     alert('Are you sure you want to slap this card?')
+        //     newState.is_slap = true;
+        //     updateDatabaseState(newState)
+        // }
         if (gameState.move_status === 'selecting card'){
             let newState = new GameState(gameState, user)
             newState.swapWithCardFromHand(card)
@@ -244,7 +250,7 @@ const Game = () => {
                 if (gameState.message === 'Waiting for all players to be ready, remember the cards!' && (className==='card1' || className==='card2')){
                     isFaceUp = true;
                 }
-                cards.push(<motion.div key={`${i}${j}`} onClick={()=>cardClicked(newCard)} layout transition={{ duration: 1.5 }} className={className}><PlayingCard value={values[j]} suit={suits[i]} faceUp={isFaceUp} packPos={packPos}/></motion.div>) 
+                cards.push(<motion.div key={`${i}${j}`} onClick={()=>cardClicked(newCard)} layout transition={{ duration: 2 }} className={className}><PlayingCard value={values[j]} suit={suits[i]} faceUp={isFaceUp} packPos={packPos}/></motion.div>) 
             }
         }
         playerInfo = gameState.getMyPlayerInfo()
